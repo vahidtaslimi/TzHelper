@@ -44,6 +44,11 @@
     self.detailViewController = (SHADetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     [self loadTimezones];
     [self loadGroupHeaders];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
+}
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,7 +103,11 @@
     [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Europe/Amsterdam"] atIndex:3];
     [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"GMT"] atIndex:4];
     [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"America/Los_Angeles"] atIndex:5];
-    
+        [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Asia/Damascus"] atIndex:6];
+        [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Asia/Phnom_Penh"] atIndex:7];
+            [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Atlantic/Azores"] atIndex:8];
+            [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Europe/Moscow"] atIndex:9];
+            [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Europe/Paris"] atIndex:10];
     //[[self dateFormatter]setTimeZone:timezoe];
 }
 
@@ -113,6 +122,7 @@
     }
     return _dateFormatter;
 }
+
 
 #pragma mark - Table View
 
@@ -135,7 +145,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SHATzListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TzItemCell" forIndexPath:indexPath];
+    SHATzListCell *cell =[[SHATzListCell alloc]init];// [tableView dequeueReusableCellWithIdentifier:@"TzItemCell" forIndexPath:indexPath];
     
 	static NSDateFormatter *dateFormatter = nil;
 	if (dateFormatter == nil) {
