@@ -24,6 +24,7 @@
 		F2A65DA718166829004EB2EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F2A65DA518166829004EB2EE /* InfoPlist.strings */; };
 		F2A65DA918166829004EB2EE /* MeetingPlannerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A65DA818166829004EB2EE /* MeetingPlannerTests.m */; };
 		F2A65DBD18166FFA004EB2EE /* SHATzListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A65DBC18166FFA004EB2EE /* SHATzListCell.m */; };
+		F2A65DC4181675E2004EB2EE /* SHADateTimeCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A65DC3181675E2004EB2EE /* SHADateTimeCellItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		F2A65DA818166829004EB2EE /* MeetingPlannerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingPlannerTests.m; sourceTree = "<group>"; };
 		F2A65DBB18166FFA004EB2EE /* SHATzListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHATzListCell.h; sourceTree = "<group>"; };
 		F2A65DBC18166FFA004EB2EE /* SHATzListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHATzListCell.m; sourceTree = "<group>"; };
+		F2A65DC2181675E2004EB2EE /* SHADateTimeCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHADateTimeCellItem.h; sourceTree = "<group>"; };
+		F2A65DC3181675E2004EB2EE /* SHADateTimeCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHADateTimeCellItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +170,7 @@
 		F2A65DB918166FFA004EB2EE /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				F2A65DC1181675E2004EB2EE /* Classes */,
 				F2A65DBA18166FFA004EB2EE /* Cells */,
 			);
 			path = Core;
@@ -179,6 +183,15 @@
 				F2A65DBC18166FFA004EB2EE /* SHATzListCell.m */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		F2A65DC1181675E2004EB2EE /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F2A65DC2181675E2004EB2EE /* SHADateTimeCellItem.h */,
+				F2A65DC3181675E2004EB2EE /* SHADateTimeCellItem.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,6 +293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2A65DC4181675E2004EB2EE /* SHADateTimeCellItem.m in Sources */,
 				F2A65DBD18166FFA004EB2EE /* SHATzListCell.m in Sources */,
 				F2A65D9118166829004EB2EE /* SHAMasterViewController.m in Sources */,
 				F2A65D8418166829004EB2EE /* main.m in Sources */,

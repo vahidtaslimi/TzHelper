@@ -9,9 +9,13 @@
 #import "SHAMasterViewController.h"
 
 #import "SHADetailViewController.h"
+#import "SHATzListCell.h"
+#import "SHADateTimeCellItem.h"
 
 @interface SHAMasterViewController () {
     NSMutableArray *_objects;
+    NSMutableArray *_selectedTimezones;
+    NSMutableArray *_groupHeadersByDay;
 }
 
 @property (nonatomic) NSDateFormatter *dateFormatter;
@@ -34,10 +38,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
+    
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (SHADetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    [self loadTimezones];
+    [self loadGroupHeaders];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,11 +62,51 @@
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+-(void)loadGroupHeaders
+{
+    if(!_groupHeadersByDay)
+    {
+        _groupHeadersByDay=[[NSMutableArray alloc]initWithCapacity:10];
+    }
+    
+     NSCalendar *gregorianCalendar = [NSCalendar currentCalendar];
+    for (int i=0; i<1000; i++) {
+        NSDate *currentDate = [NSDate date];
+        NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: currentDate];
+        [components setDay:components.day+i];
+        [components setHour: 0];
+        [components setMinute: 0];
+        [components setSecond: 0];
+        
+        NSDate *newDate = [gregorianCalendar dateFromComponents: components];
+        [_groupHeadersByDay addObject:newDate];
+    }
+    
+    //[[self dateFormatter]setTimeZone:timezoe];
+}
+
+-(void)loadTimezones
+{
+    if(!_selectedTimezones)
+    {
+        _selectedTimezones=[[NSMutableArray alloc]initWithCapacity:10];
+    }
+    
+    [_selectedTimezones insertObject:[NSTimeZone defaultTimeZone] atIndex:0];
+    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Australia/Perth"] atIndex:1];
+    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Asia/Tehran"] atIndex:2];
+    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Europe/Amsterdam"] atIndex:3];
+    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"GMT"] atIndex:4];
+    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"America/Los_Angeles"] atIndex:5];
+    
+    //[[self dateFormatter]setTimeZone:timezoe];
+}
+
 -(NSDateFormatter *)dateFormatter
 {
     if (!_dateFormatter) {
         _dateFormatter = [[NSDateFormatter alloc] init];
-       // NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"h:mm a" options:0 locale:[NSLocale currentLocale]];
+        // NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"h:mm a" options:0 locale:[NSLocale currentLocale]];
         //[_dateFormatter setDateFormat:dateFormat];
         [_dateFormatter setDateStyle:NSDateFormatterFullStyle];
         [_dateFormatter setTimeStyle:NSDateFormatterNoStyle];
@@ -82,22 +128,42 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSDate *currentDate = [NSDate date];
-    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
-    dayComponent.day = section;
-    
-    NSCalendar *theCalendar = [NSCalendar currentCalendar];
-    NSDate*  date= [theCalendar dateByAddingComponents:dayComponent toDate:currentDate options:0];
-   return [self.dateFormatter stringFromDate:date];
+    NSDate*  date= [_groupHeadersByDay objectAtIndex:section];
+    return [self.dateFormatter stringFromDate:date];
     //return [NSString stringWithFormat:@"%@",date];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-    NSDate *object = _objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    SHATzListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TzItemCell" forIndexPath:indexPath];
+    
+	static NSDateFormatter *dateFormatter = nil;
+	if (dateFormatter == nil) {
+		dateFormatter = [[NSDateFormatter alloc] init];
+        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"HH:mm" options:0 locale:[NSLocale currentLocale]];
+		[dateFormatter setDateFormat:dateFormat];
+	}
+    static NSCalendar *gregorianCalendar = nil;
+    if(gregorianCalendar==nil ){
+     gregorianCalendar=[NSCalendar currentCalendar];
+    }
+    
+    NSMutableArray* items=[[NSMutableArray alloc]init];
+    SHADateTimeCellItem* item;
+    NSDate* date=[_groupHeadersByDay objectAtIndex:indexPath.section];
+    
+    NSDateComponents *hourComponent = [[NSDateComponents alloc] init];
+    hourComponent.hour = indexPath.row;
+    date=[gregorianCalendar dateByAddingComponents:hourComponent toDate:date options:0];
+    
+    for (int i=0; i<[_selectedTimezones count]; i++) {
+        [dateFormatter setTimeZone:[_selectedTimezones objectAtIndex:i ]];
+        item=[[SHADateTimeCellItem alloc]init];
+        item.Value=[dateFormatter stringFromDate:date];
+        [items addObject:item];
+    }
+   
+    [cell setTimeZoneItems:items];
     return cell;
 }
 
@@ -118,20 +184,20 @@
 }
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

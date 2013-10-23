@@ -10,4 +10,6 @@
 
 @interface SHATzListCell : UITableViewCell
 
+-(void) setTimeZoneItems:(NSMutableArray* )timezoneItems;
+
 @end
