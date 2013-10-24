@@ -8,6 +8,7 @@
 
 #import "SHATzListCell.h"
 #import "SHADateTimeCellItem.h"
+#import "SHALabelGenerator.h"
 
 @implementation SHATzListCell
 UILabel* label;
@@ -30,49 +31,8 @@ UILabel* label;
 
 -(void) setTimeZoneItems:(NSMutableArray* )timezoneItems
 {
-    SHADateTimeCellItem* item;
-    float left=10;
-    float top=5;
-    float width=60;
-    float height=30;
-    UIFont* font=[UIFont systemFontOfSize:12];
-    UIView* view=[self subviews][0];// [[UIView alloc]initWithFrame:self.frame];
-    view=self.contentView;//[[UIView alloc]initWithFrame:view.frame];
-    //[self.contentView addSubview:view];
-    
-    item=[timezoneItems objectAtIndex:0];
-    CGRect frame=CGRectMake(20, top, 65, height);
-    UILabel* label=[[UILabel alloc]initWithFrame:frame];
-    label.font=[UIFont boldSystemFontOfSize:14];
-    label.text=item.Value;
-    [view addSubview:label];
-    
-    for (int i=1; i<5; i++) {
-        if([timezoneItems count]<i)
-                return;
-        
-        item=[timezoneItems objectAtIndex:i];
-        CGRect frame=CGRectMake(left+(i*width), top, width, height);
-        UILabel* label=[[UILabel alloc]initWithFrame:frame];
-        label.font=font;
-        label.text=item.Value;
-        [view addSubview:label];
-    }
-    
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    {
-        for (int i=5; i<9; i++) {
-            if([timezoneItems count]<i)
-                return;
-            
-            item=[timezoneItems objectAtIndex:i];
-            CGRect frame=CGRectMake(left+(i*width), top, width, height);
-            UILabel* label=[[UILabel alloc]initWithFrame:frame];
-            label.font=font;
-            label.text=item.Value;
-            [view addSubview:label];
-        }
-    }
+   UIView* view=self.contentView;
+    [SHALabelGenerator addValueLabelsToView:view fromTimezones:timezoneItems];
     
 }
 

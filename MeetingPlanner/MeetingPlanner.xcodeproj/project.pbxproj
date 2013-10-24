@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F259056B181929EE00787567 /* SHATimeZoneHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056A181929EE00787567 /* SHATimeZoneHelper.m */; };
+		F259057018192A4A00787567 /* SHARegion.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056D18192A4A00787567 /* SHARegion.m */; };
+		F259057118192A4A00787567 /* SHATimeZoneWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056F18192A4A00787567 /* SHATimeZoneWrapper.m */; };
+		F2A1225D1819145A00823331 /* SHAMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A1225C1819145A00823331 /* SHAMainPageViewController.m */; };
+		F2A1226018191C3C00823331 /* SHALabelGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A1225F18191C3C00823331 /* SHALabelGenerator.m */; };
 		F2A65D7818166829004EB2EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A65D7718166829004EB2EE /* Foundation.framework */; };
 		F2A65D7A18166829004EB2EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A65D7918166829004EB2EE /* CoreGraphics.framework */; };
 		F2A65D7C18166829004EB2EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A65D7B18166829004EB2EE /* UIKit.framework */; };
@@ -38,6 +43,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F2590569181929EE00787567 /* SHATimeZoneHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHATimeZoneHelper.h; sourceTree = "<group>"; };
+		F259056A181929EE00787567 /* SHATimeZoneHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHATimeZoneHelper.m; sourceTree = "<group>"; };
+		F259056C18192A4A00787567 /* SHARegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHARegion.h; sourceTree = "<group>"; };
+		F259056D18192A4A00787567 /* SHARegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHARegion.m; sourceTree = "<group>"; };
+		F259056E18192A4A00787567 /* SHATimeZoneWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHATimeZoneWrapper.h; sourceTree = "<group>"; };
+		F259056F18192A4A00787567 /* SHATimeZoneWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHATimeZoneWrapper.m; sourceTree = "<group>"; };
+		F2A1225B1819145A00823331 /* SHAMainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHAMainPageViewController.h; sourceTree = "<group>"; };
+		F2A1225C1819145A00823331 /* SHAMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHAMainPageViewController.m; sourceTree = "<group>"; };
+		F2A1225E18191C3C00823331 /* SHALabelGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHALabelGenerator.h; sourceTree = "<group>"; };
+		F2A1225F18191C3C00823331 /* SHALabelGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHALabelGenerator.m; sourceTree = "<group>"; };
 		F2A65D7418166829004EB2EE /* MeetingPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeetingPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A65D7718166829004EB2EE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F2A65D7918166829004EB2EE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -90,6 +105,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F2A1225A1819141600823331 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F2A1225B1819145A00823331 /* SHAMainPageViewController.h */,
+				F2A1225C1819145A00823331 /* SHAMainPageViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		F2A65D6B18166829004EB2EE = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +194,7 @@
 		F2A65DB918166FFA004EB2EE /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				F2A1225A1819141600823331 /* Controllers */,
 				F2A65DC1181675E2004EB2EE /* Classes */,
 				F2A65DBA18166FFA004EB2EE /* Cells */,
 			);
@@ -188,8 +213,16 @@
 		F2A65DC1181675E2004EB2EE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F259056C18192A4A00787567 /* SHARegion.h */,
+				F259056D18192A4A00787567 /* SHARegion.m */,
+				F259056E18192A4A00787567 /* SHATimeZoneWrapper.h */,
+				F259056F18192A4A00787567 /* SHATimeZoneWrapper.m */,
 				F2A65DC2181675E2004EB2EE /* SHADateTimeCellItem.h */,
 				F2A65DC3181675E2004EB2EE /* SHADateTimeCellItem.m */,
+				F2A1225E18191C3C00823331 /* SHALabelGenerator.h */,
+				F2A1225F18191C3C00823331 /* SHALabelGenerator.m */,
+				F2590569181929EE00787567 /* SHATimeZoneHelper.h */,
+				F259056A181929EE00787567 /* SHATimeZoneHelper.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -294,9 +327,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2A65DC4181675E2004EB2EE /* SHADateTimeCellItem.m in Sources */,
+				F2A1226018191C3C00823331 /* SHALabelGenerator.m in Sources */,
 				F2A65DBD18166FFA004EB2EE /* SHATzListCell.m in Sources */,
+				F2A1225D1819145A00823331 /* SHAMainPageViewController.m in Sources */,
 				F2A65D9118166829004EB2EE /* SHAMasterViewController.m in Sources */,
+				F259057018192A4A00787567 /* SHARegion.m in Sources */,
+				F259056B181929EE00787567 /* SHATimeZoneHelper.m in Sources */,
 				F2A65D8418166829004EB2EE /* main.m in Sources */,
+				F259057118192A4A00787567 /* SHATimeZoneWrapper.m in Sources */,
 				F2A65D9418166829004EB2EE /* SHADetailViewController.m in Sources */,
 				F2A65D8818166829004EB2EE /* SHAAppDelegate.m in Sources */,
 			);
@@ -517,6 +555,7 @@
 				F2A65DAE18166829004EB2EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F2A65DAF18166829004EB2EE /* Build configuration list for PBXNativeTarget "MeetingPlannerTests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +564,7 @@
 				F2A65DB118166829004EB2EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

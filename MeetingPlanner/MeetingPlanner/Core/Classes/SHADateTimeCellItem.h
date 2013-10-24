@@ -12,5 +12,8 @@
 @property NSString* Value;
 @property NSString* DayDifference;
 @property NSDate* Date;
+@property NSString* RegionName;
+@property NSString* Name;
+@property NSString* Offset;
 
 @end
