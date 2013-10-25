@@ -10,8 +10,8 @@
 #import "SHADetailViewController.h"
 
 @interface SHAMainPageViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIScrollView *timezoneNamesContainer;
+@property (retain, nonatomic)IBOutlet  UITableView *tableView;
+@property (retain, nonatomic) IBOutlet UIView *timezoneNamesContainer;
 
 
 @property (strong, nonatomic) SHADetailViewController *detailViewController;

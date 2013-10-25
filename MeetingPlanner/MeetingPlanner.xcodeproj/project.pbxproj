@@ -473,6 +473,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Shaghayegh Moshtarikhah (83VH7W9MBM)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MeetingPlanner/MeetingPlanner-Prefix.pch";
 				INFOPLIST_FILE = "MeetingPlanner/MeetingPlanner-Info.plist";
@@ -486,6 +487,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shaghayegh Moshtarikhah (D9AX649GWZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MeetingPlanner/MeetingPlanner-Prefix.pch";
 				INFOPLIST_FILE = "MeetingPlanner/MeetingPlanner-Info.plist";

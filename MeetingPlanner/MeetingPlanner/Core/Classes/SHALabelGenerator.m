@@ -55,7 +55,7 @@ UIFont* offsetFont;
     label.font=[UIFont boldSystemFontOfSize:14];
     
     for (int i=1; i<portraitCount; i++) {
-        if([timezoneItems count]<i)
+        if([timezoneItems count]<=i)
             return;
         
         item=[timezoneItems objectAtIndex:i];
@@ -65,8 +65,8 @@ UIFont* offsetFont;
     
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
     {
-        for (int i=5; i<landscapeCount; i++) {
-            if([timezoneItems count]<i)
+        for (int i=portraitCount; i<landscapeCount; i++) {
+            if([timezoneItems count]<=i)
                 return;
             
             item=[timezoneItems objectAtIndex:i];
@@ -78,7 +78,7 @@ UIFont* offsetFont;
 
 +(void) addHeaderLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems
 {
-    float rotation=0;//M_PI/2;
+    //float rotation=0;//M_PI/2;
     SHADateTimeCellItem* item;
     item=[timezoneItems objectAtIndex:0];
     CGRect frame=CGRectMake(firstItemLeft, top, firstItemWidth, height);
@@ -88,7 +88,7 @@ UIFont* offsetFont;
 
     
     for (int i=1; i<portraitCount; i++) {
-        if([timezoneItems count]<i)
+        if([timezoneItems count]<=i)
             return;
         
         item=[timezoneItems objectAtIndex:i];
@@ -101,8 +101,8 @@ UIFont* offsetFont;
     
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
     {
-        for (int i=5; i<landscapeCount; i++) {
-            if([timezoneItems count]<i)
+        for (int i=portraitCount; i<landscapeCount; i++) {
+            if([timezoneItems count]<=i)
                 return;
             
             item=[timezoneItems objectAtIndex:i];

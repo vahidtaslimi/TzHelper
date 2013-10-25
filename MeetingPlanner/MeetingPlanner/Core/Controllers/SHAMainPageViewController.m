@@ -18,6 +18,7 @@
     NSMutableArray *_objects;
     NSMutableArray *_selectedTimezones;
     NSMutableArray *_groupHeadersByDay;
+     NSDate *_selectedDate;
 }
 
 @property (nonatomic) NSDateFormatter *dateFormatter;
@@ -30,6 +31,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
@@ -51,15 +53,19 @@
  //   UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
    // self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (SHADetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+     _selectedDate = [NSDate date];
     [self loadTimezones];
     [self loadGroupHeaders];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
-    self.tableView.dataSource=self;
+   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self addHeaderLabels];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:500];
+    [self.tableView scrollToRowAtIndexPath:indexPath
+                         atScrollPosition:UITableViewScrollPositionTop
+                                 animated:YES];
 }
 -(void)addHeaderLabels
 {
@@ -97,14 +103,14 @@
 {
     if(!_groupHeadersByDay)
     {
-        _groupHeadersByDay=[[NSMutableArray alloc]initWithCapacity:10];
+        _groupHeadersByDay=[[NSMutableArray alloc]init];
     }
     
     NSCalendar *gregorianCalendar = [NSCalendar currentCalendar];
-    for (int i=0; i<1000; i++) {
-        NSDate *currentDate = [NSDate date];
-        NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: currentDate];
-        [components setDay:components.day+i];
+    for (int i=500; i>0; i--) {
+        
+        NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: _selectedDate];
+        [components setDay:components.day-i];
         [components setHour: 0];
         [components setMinute: 0];
         [components setSecond: 0];
@@ -113,6 +119,19 @@
         [_groupHeadersByDay addObject:newDate];
     }
     
+    [_groupHeadersByDay addObject:_selectedDate];
+    
+    for (int i=1; i<500; i++) {
+        
+        NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: _selectedDate];
+        [components setDay:components.day+i];
+        [components setHour: 0];
+        [components setMinute: 0];
+        [components setSecond: 0];
+        
+        NSDate *newDate = [gregorianCalendar dateFromComponents: components];
+        [_groupHeadersByDay addObject:newDate];
+    }
     //[[self dateFormatter]setTimeZone:timezoe];
 }
 
@@ -154,7 +173,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1000;
+    return _groupHeadersByDay.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
