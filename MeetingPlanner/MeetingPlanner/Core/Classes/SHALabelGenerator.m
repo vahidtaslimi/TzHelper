@@ -81,10 +81,10 @@ UIFont* offsetFont;
     //float rotation=0;//M_PI/2;
     SHADateTimeCellItem* item;
     item=[timezoneItems objectAtIndex:0];
-    CGRect frame=CGRectMake(firstItemLeft, top, firstItemWidth, height);
-    UILabel* label=[self getHeaderLabel:view at:frame text:item.Name];
-    label.font=[UIFont boldSystemFontOfSize:10];
-    [self addOffsetLabelToView:view at:firstItemLeft text:item.Offset];
+    CGRect frame=CGRectMake(firstItemLeft, top, firstItemWidth, view.frame.size.height);
+    
+    //label.font=[UIFont boldSystemFontOfSize:10];
+    [self addHeaderItemView:view at:frame text:item.Name offset:item.Offset];
 
     
     for (int i=1; i<portraitCount; i++) {
@@ -93,9 +93,8 @@ UIFont* offsetFont;
         
         item=[timezoneItems objectAtIndex:i];
         float labelLeft= left+(i*(width+marginLeft));
-        CGRect frame=CGRectMake(labelLeft, top, width, height);
-        label=[self getHeaderLabel:view at:frame text:item.Name];
-        [self addOffsetLabelToView:view at:labelLeft text:item.Offset];
+        CGRect frame=CGRectMake(labelLeft, top, width, view.frame.size.height);
+        [self addHeaderItemView:view at:frame text:item.Name offset:item.Offset];
 
     }
     
@@ -107,26 +106,50 @@ UIFont* offsetFont;
             
             item=[timezoneItems objectAtIndex:i];
             float labelLeft= left+(i*(width+marginLeft));
-            CGRect frame=CGRectMake(labelLeft, top, width, height);
-            label=[self getHeaderLabel:view at:frame text:item.Name];
-                    [self addOffsetLabelToView:view at:labelLeft text:item.Offset];
+            CGRect frame=CGRectMake(labelLeft, top, width, view.frame.size.height);
+            [self addHeaderItemView:view at:frame text:item.Name offset:item.Offset];
         }
     }
 }
 
-+(UILabel*)addOffsetLabelToView:(UIView*)view at:(float)left text:(NSString*)text
++(UIButton*)addHeaderItemView:(UIView*)view  at:(CGRect)frame text:(NSString*)text offset:(NSString*)offset
 {
-    CGRect frame=CGRectMake(left, 25, width, 15);
-    float rotation=0;//M_PI/2;
-    UILabel* label=[[UILabel alloc]initWithFrame:frame];
+    //CGRect offsetFrame=CGRectMake(0, 25, width, 15);
+    //float rotation=0;//M_PI/2;
+    UIButton* button=[[UIButton alloc]initWithFrame:frame];
+    UILabel* label=[self getHeaderLabelWithText:text];
+   
+    UILabel* offsetLabel=[self getHeaderOffsetLabelWithText:offset];
+    [button addSubview:offsetLabel];
+    [button addSubview:label];
+    [view addSubview:button];
+    //button.backgroundColor=[UIColor redColor];
+    return button;
+}
+
++(UILabel*)getHeaderOffsetLabelWithText:(NSString*)text
+{
+    CGRect frame=CGRectMake(0, 20, width, 20);
+     UILabel* label=[[UILabel alloc]initWithFrame:frame];
     label.font=offsetFont;
     label.lineBreakMode=NSLineBreakByTruncatingTail;
     label.numberOfLines=1;
-    label.transform = CGAffineTransformMakeRotation(rotation);//(M_PI_4);
     label.text=text;
-    [view addSubview:label];
+    //label.backgroundColor=[UIColor yellowColor];
     return label;
 }
++(UILabel*)getHeaderLabelWithText:(NSString*)text
+{
+    CGRect frame=CGRectMake(0, 0, width, height);
+    UILabel* label=[[UILabel alloc]initWithFrame:frame];
+    label.font=headerFont;
+    label.lineBreakMode=NSLineBreakByTruncatingTail;
+    label.numberOfLines=1;
+    label.text=text;
+    //label.backgroundColor=[UIColor blueColor];
+    return label;
+}
+
 
 +(UILabel*)addItemLabel:(UIView*)view at:(float)left text:(NSString*)text
 {
@@ -142,16 +165,4 @@ UIFont* offsetFont;
     return label;
 }
 
-+(UILabel*)getHeaderLabel:(UIView*)view at:(CGRect)frame text:(NSString*)text
-{
-    float rotation=0;//M_PI/2;
-    UILabel* label=[[UILabel alloc]initWithFrame:frame];
-    label.font=headerFont;
-    label.lineBreakMode=NSLineBreakByTruncatingTail;
-    label.numberOfLines=1;
-    label.transform = CGAffineTransformMakeRotation(rotation);//(M_PI_4);
-    label.text=text;
-    [view addSubview:label];
-    return label;
-}
 @end
