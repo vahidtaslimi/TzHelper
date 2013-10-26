@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SHAButton.h"
 
 @interface SHALabelGenerator : NSObject
 
 +(void) addValueLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems;
-+(void) addHeaderLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems;
++(void) addHeaderLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems buttonPressAction:(SHAButtonActionBlock) action;
 
 @end

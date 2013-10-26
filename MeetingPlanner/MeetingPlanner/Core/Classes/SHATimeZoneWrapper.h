@@ -6,6 +6,7 @@
 
 @property (nonatomic) NSString *localeName;
 @property (nonatomic) NSTimeZone *timeZone;
+@property (nonatomic) NSString *region;
 
 @property (nonatomic) NSDate *date;
 @property (nonatomic) NSCalendar *calendar;

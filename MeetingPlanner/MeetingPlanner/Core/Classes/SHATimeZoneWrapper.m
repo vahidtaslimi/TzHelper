@@ -50,6 +50,7 @@ static UIImage *q4Image;
 		_timeZone = aTimeZone;
 		
 		NSString *name = nil;
+        _region=[nameComponents objectAtIndex:0];
 		if ([nameComponents count] == 2) {
 			name = [nameComponents objectAtIndex:1];
 		}

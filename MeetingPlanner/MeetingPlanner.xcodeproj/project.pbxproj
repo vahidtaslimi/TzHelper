@@ -10,6 +10,11 @@
 		F259056B181929EE00787567 /* SHATimeZoneHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056A181929EE00787567 /* SHATimeZoneHelper.m */; };
 		F259057018192A4A00787567 /* SHARegion.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056D18192A4A00787567 /* SHARegion.m */; };
 		F259057118192A4A00787567 /* SHATimeZoneWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056F18192A4A00787567 /* SHATimeZoneWrapper.m */; };
+		F2590574181AB51A00787567 /* SHAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F2590573181AB51A00787567 /* SHAButton.m */; };
+		F2590577181BCE2800787567 /* SHATimeZone.m in Sources */ = {isa = PBXBuildFile; fileRef = F2590576181BCE2800787567 /* SHATimeZone.m */; };
+		F259057A181BD19200787567 /* SHATimeZoneSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2590579181BD19200787567 /* SHATimeZoneSelectionViewController.m */; };
+		F259057D181BD5B600787567 /* SHATimeZoneSeletctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F259057C181BD5B600787567 /* SHATimeZoneSeletctionCell.m */; };
+		F2590580181BE5F400787567 /* SHALocalDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F259057F181BE5F400787567 /* SHALocalDatabase.m */; };
 		F2A1225D1819145A00823331 /* SHAMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A1225C1819145A00823331 /* SHAMainPageViewController.m */; };
 		F2A1226018191C3C00823331 /* SHALabelGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A1225F18191C3C00823331 /* SHALabelGenerator.m */; };
 		F2A65D7818166829004EB2EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A65D7718166829004EB2EE /* Foundation.framework */; };
@@ -49,6 +54,16 @@
 		F259056D18192A4A00787567 /* SHARegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHARegion.m; sourceTree = "<group>"; };
 		F259056E18192A4A00787567 /* SHATimeZoneWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHATimeZoneWrapper.h; sourceTree = "<group>"; };
 		F259056F18192A4A00787567 /* SHATimeZoneWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHATimeZoneWrapper.m; sourceTree = "<group>"; };
+		F2590572181AB51A00787567 /* SHAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHAButton.h; sourceTree = "<group>"; };
+		F2590573181AB51A00787567 /* SHAButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHAButton.m; sourceTree = "<group>"; };
+		F2590575181BCE2800787567 /* SHATimeZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHATimeZone.h; sourceTree = "<group>"; };
+		F2590576181BCE2800787567 /* SHATimeZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHATimeZone.m; sourceTree = "<group>"; };
+		F2590578181BD19200787567 /* SHATimeZoneSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHATimeZoneSelectionViewController.h; sourceTree = "<group>"; };
+		F2590579181BD19200787567 /* SHATimeZoneSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHATimeZoneSelectionViewController.m; sourceTree = "<group>"; };
+		F259057B181BD5B600787567 /* SHATimeZoneSeletctionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHATimeZoneSeletctionCell.h; sourceTree = "<group>"; };
+		F259057C181BD5B600787567 /* SHATimeZoneSeletctionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHATimeZoneSeletctionCell.m; sourceTree = "<group>"; };
+		F259057E181BE5F400787567 /* SHALocalDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHALocalDatabase.h; sourceTree = "<group>"; };
+		F259057F181BE5F400787567 /* SHALocalDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHALocalDatabase.m; sourceTree = "<group>"; };
 		F2A1225B1819145A00823331 /* SHAMainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHAMainPageViewController.h; sourceTree = "<group>"; };
 		F2A1225C1819145A00823331 /* SHAMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHAMainPageViewController.m; sourceTree = "<group>"; };
 		F2A1225E18191C3C00823331 /* SHALabelGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHALabelGenerator.h; sourceTree = "<group>"; };
@@ -110,6 +125,8 @@
 			children = (
 				F2A1225B1819145A00823331 /* SHAMainPageViewController.h */,
 				F2A1225C1819145A00823331 /* SHAMainPageViewController.m */,
+				F2590578181BD19200787567 /* SHATimeZoneSelectionViewController.h */,
+				F2590579181BD19200787567 /* SHATimeZoneSelectionViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -206,6 +223,8 @@
 			children = (
 				F2A65DBB18166FFA004EB2EE /* SHATzListCell.h */,
 				F2A65DBC18166FFA004EB2EE /* SHATzListCell.m */,
+				F259057B181BD5B600787567 /* SHATimeZoneSeletctionCell.h */,
+				F259057C181BD5B600787567 /* SHATimeZoneSeletctionCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -213,16 +232,22 @@
 		F2A65DC1181675E2004EB2EE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				F259056C18192A4A00787567 /* SHARegion.h */,
-				F259056D18192A4A00787567 /* SHARegion.m */,
-				F259056E18192A4A00787567 /* SHATimeZoneWrapper.h */,
-				F259056F18192A4A00787567 /* SHATimeZoneWrapper.m */,
+				F2590572181AB51A00787567 /* SHAButton.h */,
+				F2590573181AB51A00787567 /* SHAButton.m */,
 				F2A65DC2181675E2004EB2EE /* SHADateTimeCellItem.h */,
 				F2A65DC3181675E2004EB2EE /* SHADateTimeCellItem.m */,
 				F2A1225E18191C3C00823331 /* SHALabelGenerator.h */,
 				F2A1225F18191C3C00823331 /* SHALabelGenerator.m */,
+				F259057E181BE5F400787567 /* SHALocalDatabase.h */,
+				F259057F181BE5F400787567 /* SHALocalDatabase.m */,
+				F259056C18192A4A00787567 /* SHARegion.h */,
+				F259056D18192A4A00787567 /* SHARegion.m */,
+				F2590575181BCE2800787567 /* SHATimeZone.h */,
+				F2590576181BCE2800787567 /* SHATimeZone.m */,
 				F2590569181929EE00787567 /* SHATimeZoneHelper.h */,
 				F259056A181929EE00787567 /* SHATimeZoneHelper.m */,
+				F259056E18192A4A00787567 /* SHATimeZoneWrapper.h */,
+				F259056F18192A4A00787567 /* SHATimeZoneWrapper.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -327,16 +352,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2A65DC4181675E2004EB2EE /* SHADateTimeCellItem.m in Sources */,
+				F2590577181BCE2800787567 /* SHATimeZone.m in Sources */,
 				F2A1226018191C3C00823331 /* SHALabelGenerator.m in Sources */,
+				F2590574181AB51A00787567 /* SHAButton.m in Sources */,
 				F2A65DBD18166FFA004EB2EE /* SHATzListCell.m in Sources */,
 				F2A1225D1819145A00823331 /* SHAMainPageViewController.m in Sources */,
 				F2A65D9118166829004EB2EE /* SHAMasterViewController.m in Sources */,
 				F259057018192A4A00787567 /* SHARegion.m in Sources */,
 				F259056B181929EE00787567 /* SHATimeZoneHelper.m in Sources */,
+				F2590580181BE5F400787567 /* SHALocalDatabase.m in Sources */,
+				F259057D181BD5B600787567 /* SHATimeZoneSeletctionCell.m in Sources */,
 				F2A65D8418166829004EB2EE /* main.m in Sources */,
 				F259057118192A4A00787567 /* SHATimeZoneWrapper.m in Sources */,
 				F2A65D9418166829004EB2EE /* SHADetailViewController.m in Sources */,
 				F2A65D8818166829004EB2EE /* SHAAppDelegate.m in Sources */,
+				F259057A181BD19200787567 /* SHATimeZoneSelectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

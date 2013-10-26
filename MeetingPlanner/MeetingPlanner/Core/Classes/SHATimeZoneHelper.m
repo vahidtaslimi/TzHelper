@@ -31,7 +31,13 @@
         item.Name = [NSString stringWithFormat:@"%@ (%@)", [components objectAtIndex:2], [components objectAtIndex:1]];
     }
     
-    item.Offset=timeZone.abbreviation;
+    item.TimeZone=timeZone;
+    
+    if([item isKindOfClass:[SHADateTimeCellItem class]])
+    {
+        item.Offset=timeZone.abbreviation;
+    }
+    
     return item;
 }
 

@@ -48,7 +48,7 @@
    CGRect frame= self.tableView.frame;
     frame.origin.x=100;
     self.tableView.frame=frame;
-    UIView* headerView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 50)];
+   // UIView* headerView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 50)];
     }
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {

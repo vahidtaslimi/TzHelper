@@ -49,7 +49,6 @@ UIFont* offsetFont;
 +(void) addValueLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems
 {
     SHADateTimeCellItem* item;
-    UILabel* offsetLabel;
     item=[timezoneItems objectAtIndex:0];
     UILabel* label=[self addItemLabel:view at:firstItemLeft text:item.Value];
     label.font=[UIFont boldSystemFontOfSize:14];
@@ -76,50 +75,68 @@ UIFont* offsetFont;
     }
 }
 
-+(void) addHeaderLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems
++(void) addHeaderLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems buttonPressAction:(SHAButtonActionBlock) action
 {
     //float rotation=0;//M_PI/2;
-    SHADateTimeCellItem* item;
+    SHATimeZone* item;
     item=[timezoneItems objectAtIndex:0];
     CGRect frame=CGRectMake(firstItemLeft, top, firstItemWidth, view.frame.size.height);
     
     //label.font=[UIFont boldSystemFontOfSize:10];
-    [self addHeaderItemView:view at:frame text:item.Name offset:item.Offset];
-
+    [self addHeaderItemView:view at:frame timezone:item buttonPressAction:action atOrder:0];
+    
     
     for (int i=1; i<portraitCount; i++) {
-        if([timezoneItems count]<=i)
-            return;
-        
-        item=[timezoneItems objectAtIndex:i];
         float labelLeft= left+(i*(width+marginLeft));
         CGRect frame=CGRectMake(labelLeft, top, width, view.frame.size.height);
-        [self addHeaderItemView:view at:frame text:item.Name offset:item.Offset];
-
+        if([timezoneItems count]<=i)
+        {
+                       [self addHeaderItemView:view at:frame timezone:NULL buttonPressAction:action atOrder:i];
+        }
+        else
+        {
+            item=[timezoneItems objectAtIndex:i];
+            [self addHeaderItemView:view at:frame timezone:item buttonPressAction:action atOrder:i];
+        }
     }
     
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
     {
         for (int i=portraitCount; i<landscapeCount; i++) {
-            if([timezoneItems count]<=i)
-                return;
-            
-            item=[timezoneItems objectAtIndex:i];
             float labelLeft= left+(i*(width+marginLeft));
             CGRect frame=CGRectMake(labelLeft, top, width, view.frame.size.height);
-            [self addHeaderItemView:view at:frame text:item.Name offset:item.Offset];
+            if([timezoneItems count]<=i)
+            {
+                    [self addHeaderItemView:view at:frame timezone:NULL buttonPressAction:action atOrder:i];
+            }
+            else
+            {
+                item=[timezoneItems objectAtIndex:i];
+                [self addHeaderItemView:view at:frame timezone:item buttonPressAction:action atOrder:i];
+            }
         }
     }
 }
 
-+(UIButton*)addHeaderItemView:(UIView*)view  at:(CGRect)frame text:(NSString*)text offset:(NSString*)offset
++(UIButton*)addHeaderItemView:(UIView*)view  at:(CGRect)frame timezone:(SHATimeZone*)timezone buttonPressAction:(SHAButtonActionBlock) action atOrder:(int)order
 {
     //CGRect offsetFrame=CGRectMake(0, 25, width, 15);
     //float rotation=0;//M_PI/2;
-    UIButton* button=[[UIButton alloc]initWithFrame:frame];
-    UILabel* label=[self getHeaderLabelWithText:text];
+    SHAButton* button=[[SHAButton alloc]initWithFrame:frame];
+    [button handleControlEvent:UIControlEventTouchUpInside withBlock:action];
+    button.timeZoneInfo.Order=order;
+    button.timeZoneInfo=timezone;
+    NSString* labelText=@"Select";
+    NSString* offsetLabelText=@"+";
+    if(timezone != NULL)
+    {
+        labelText=timezone.Name;
+     offsetLabelText=timezone.TimeZone.abbreviation;
+    }
    
-    UILabel* offsetLabel=[self getHeaderOffsetLabelWithText:offset];
+    UILabel* label=[self getHeaderLabelWithText:labelText];
+    
+    UILabel* offsetLabel=[self getHeaderOffsetLabelWithText:offsetLabelText];
     [button addSubview:offsetLabel];
     [button addSubview:label];
     [view addSubview:button];
@@ -130,7 +147,7 @@ UIFont* offsetFont;
 +(UILabel*)getHeaderOffsetLabelWithText:(NSString*)text
 {
     CGRect frame=CGRectMake(0, 20, width, 20);
-     UILabel* label=[[UILabel alloc]initWithFrame:frame];
+    UILabel* label=[[UILabel alloc]initWithFrame:frame];
     label.font=offsetFont;
     label.lineBreakMode=NSLineBreakByTruncatingTail;
     label.numberOfLines=1;

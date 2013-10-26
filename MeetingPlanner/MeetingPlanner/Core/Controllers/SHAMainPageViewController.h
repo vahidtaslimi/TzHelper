@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SHADetailViewController.h"
+#import "SHAButton.h"
 
 @interface SHAMainPageViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 @property (retain, nonatomic)IBOutlet  UITableView *tableView;
@@ -15,5 +16,6 @@
 
 
 @property (strong, nonatomic) SHADetailViewController *detailViewController;
+
 
 @end

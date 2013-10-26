@@ -13,6 +13,10 @@
 #import "SHALabelGenerator.h"
 #import "SHATimeZoneWrapper.h"
 #import "SHATimeZoneHelper.h"
+#import "SHATimeZone.h"
+#import "SHATimeZoneSelectionViewController.h"
+#import "SHALocalDatabase.h"
+
 
 @interface SHAMainPageViewController (){
     NSMutableArray *_objects;
@@ -70,12 +74,28 @@
 -(void)addHeaderLabels
 {
     NSMutableArray* items=[[NSMutableArray alloc]init];
-    SHADateTimeCellItem* item;
+    SHATimeZone* item;
     for (int i=0; i<_selectedTimezones.count; i++) {
         item=[SHATimeZoneHelper Parse:[_selectedTimezones objectAtIndex:i]];
         [items addObject:item];
     }
-     [SHALabelGenerator addHeaderLabelsToView:self.timezoneNamesContainer fromTimezones:items];
+    
+    [SHALabelGenerator addHeaderLabelsToView:self.timezoneNamesContainer fromTimezones:items buttonPressAction:^(UIButton* button){
+          SHAButton* sender=(SHAButton*)button;
+          [self performSegueWithIdentifier:@"TimeZoneSelectionSegue" sender:sender];
+        
+        /*
+        UIAlertView* alert=[[UIAlertView alloc]initWithTitle:@"message"
+                                                     message:[NSString stringWithFormat:@"You pressed button %d",sender.order]
+                                                    delegate:self cancelButtonTitle:@"cencel" otherButtonTitles:Nil, nil];
+        [alert show];
+   */
+         }];
+}
+
+-(void)handleHeaderTap:(UIButton*)sender
+{
+    
 }
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
@@ -137,23 +157,7 @@
 
 -(void)loadTimezones
 {
-    if(!_selectedTimezones)
-    {
-        _selectedTimezones=[[NSMutableArray alloc]initWithCapacity:10];
-    }
-    
-    [_selectedTimezones insertObject:[NSTimeZone defaultTimeZone] atIndex:0];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Australia/Perth"] atIndex:1];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Asia/Tehran"] atIndex:2];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Europe/Amsterdam"] atIndex:3];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"GMT"] atIndex:4];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"America/Los_Angeles"] atIndex:5];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Asia/Damascus"] atIndex:6];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Asia/Phnom_Penh"] atIndex:7];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Atlantic/Azores"] atIndex:8];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Europe/Moscow"] atIndex:9];
-    [_selectedTimezones insertObject:[NSTimeZone timeZoneWithName:@"Europe/Paris"] atIndex:10];
-    //[[self dateFormatter]setTimeZone:timezoe];
+    _selectedTimezones=[SHALocalDatabase loadSelectedTimeZones];
 }
 
 -(NSDateFormatter *)dateFormatter
@@ -263,11 +267,17 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+{  
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSDate *object = _objects[indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
+    }
+    else if([[segue identifier] isEqualToString:@"TimeZoneSelectionSegue"])
+    {
+        SHATimeZoneSelectionViewController* controller=[segue destinationViewController];
+        SHAButton* button=(SHAButton*)sender;
+        controller.selectedTimeZone=button.timeZoneInfo;
     }
 }
 

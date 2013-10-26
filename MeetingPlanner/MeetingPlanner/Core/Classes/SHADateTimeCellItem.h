@@ -7,13 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SHATimeZone.h"
 
-@interface SHADateTimeCellItem : NSObject
+@interface SHADateTimeCellItem : SHATimeZone
 @property NSString* Value;
 @property NSString* DayDifference;
 @property NSDate* Date;
-@property NSString* RegionName;
-@property NSString* Name;
 @property NSString* Offset;
 
 @end
