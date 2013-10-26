@@ -173,7 +173,7 @@
     for (int i=0; i<[_selectedTimezones count]; i++) {
         [dateFormatter setTimeZone:[_selectedTimezones objectAtIndex:i ]];
         item=[[SHADateTimeCellItem alloc]init];
-        item.Value=[dateFormatter stringFromDate:date];
+        
         [items addObject:item];
     }
    

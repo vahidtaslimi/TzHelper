@@ -39,6 +39,7 @@ UIFont* offsetFont;
         {
             
         }
+
         font=[UIFont systemFontOfSize:12];
         headerFont=[UIFont systemFontOfSize:10];
         offsetFont=[UIFont systemFontOfSize:8];
@@ -75,9 +76,27 @@ UIFont* offsetFont;
     }
 }
 
+
++(UILabel*)addItemLabel:(UIView*)view at:(float)left text:(NSString*)text
+{
+    float rotation=0;//M_PI/2;
+    CGRect frame=CGRectMake(left, top, width, height);
+    UILabel* label=[[UILabel alloc]initWithFrame:frame];
+    label.font=font;
+    label.lineBreakMode=NSLineBreakByTruncatingTail;
+    label.numberOfLines=1;
+    label.transform = CGAffineTransformMakeRotation(rotation);//(M_PI_4);
+    label.text=text;
+    [view addSubview:label];
+    return label;
+}
+
 +(void) addHeaderLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems buttonPressAction:(SHAButtonActionBlock) action
 {
     //float rotation=0;//M_PI/2;
+    for(UIView *subview in [view subviews]) {
+        [subview removeFromSuperview];
+    }
     SHATimeZone* item;
     item=[timezoneItems objectAtIndex:0];
     CGRect frame=CGRectMake(firstItemLeft, top, firstItemWidth, view.frame.size.height);
@@ -125,7 +144,8 @@ UIFont* offsetFont;
     SHAButton* button=[[SHAButton alloc]initWithFrame:frame];
     [button handleControlEvent:UIControlEventTouchUpInside withBlock:action];
     button.timeZoneInfo.Order=order;
-    button.timeZoneInfo=timezone;
+    button.timeZoneInfo.Name=timezone.Name;
+    button.timeZoneInfo.TimeZone=timezone.TimeZone;
     NSString* labelText=@"Select";
     NSString* offsetLabelText=@"+";
     if(timezone != NULL)
@@ -164,21 +184,6 @@ UIFont* offsetFont;
     label.numberOfLines=1;
     label.text=text;
     //label.backgroundColor=[UIColor blueColor];
-    return label;
-}
-
-
-+(UILabel*)addItemLabel:(UIView*)view at:(float)left text:(NSString*)text
-{
-    float rotation=0;//M_PI/2;
-    CGRect frame=CGRectMake(left, top, width, height);
-    UILabel* label=[[UILabel alloc]initWithFrame:frame];
-    label.font=font;
-    label.lineBreakMode=NSLineBreakByTruncatingTail;
-    label.numberOfLines=1;
-    label.transform = CGAffineTransformMakeRotation(rotation);//(M_PI_4);
-    label.text=text;
-    [view addSubview:label];
     return label;
 }
 

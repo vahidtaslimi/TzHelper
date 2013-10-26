@@ -9,6 +9,7 @@
 #import "SHATimeZoneSelectionViewController.h"
 #import "SHATimeZoneWrapper.h"
 #import "SHATimeZoneSeletctionCell.h"
+#import "SHALocalDatabase.h"
 
 @interface SHATimeZoneSelectionViewController ()
 
@@ -113,6 +114,13 @@
     return [self.collation sectionForSectionIndexTitleAtIndex:index];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSArray *timeZonesInSection = (self.sectionsArray)[indexPath.section];
+	SHATimeZoneWrapper *timeZone = timeZonesInSection[indexPath.row];
+    [SHALocalDatabase updateSelectedTimeZonesAtIndex:self.selectedTimeZone.Order withValue:timeZone.timeZone];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - Set the data array and configure the section data
 

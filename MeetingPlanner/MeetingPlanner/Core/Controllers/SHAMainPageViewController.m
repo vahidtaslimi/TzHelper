@@ -58,13 +58,14 @@
    // self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (SHADetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
      _selectedDate = [NSDate date];
-    [self loadTimezones];
-    [self loadGroupHeaders];
-   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
+       [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self loadTimezones];
+    [self loadGroupHeaders];
+
     [self addHeaderLabels];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:500];
     [self.tableView scrollToRowAtIndexPath:indexPath
@@ -82,14 +83,14 @@
     
     [SHALabelGenerator addHeaderLabelsToView:self.timezoneNamesContainer fromTimezones:items buttonPressAction:^(UIButton* button){
           SHAButton* sender=(SHAButton*)button;
+        if(sender.timeZoneInfo.Order==0)
+        {
+            return;
+        }
+        
           [self performSegueWithIdentifier:@"TimeZoneSelectionSegue" sender:sender];
         
-        /*
-        UIAlertView* alert=[[UIAlertView alloc]initWithTitle:@"message"
-                                                     message:[NSString stringWithFormat:@"You pressed button %d",sender.order]
-                                                    delegate:self cancelButtonTitle:@"cencel" otherButtonTitles:Nil, nil];
-        [alert show];
-   */
+        
          }];
 }
 
@@ -139,7 +140,14 @@
         [_groupHeadersByDay addObject:newDate];
     }
     
-    [_groupHeadersByDay addObject:_selectedDate];
+    NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: _selectedDate];
+    [components setDay:components.day];
+    [components setHour: 0];
+    [components setMinute: 0];
+    [components setSecond: 0];
+    
+    NSDate *newDate = [gregorianCalendar dateFromComponents: components];
+    [_groupHeadersByDay addObject:newDate];
     
     for (int i=1; i<500; i++) {
         
@@ -197,8 +205,9 @@
     SHATzListCell *cell =[[SHATzListCell alloc]init];// [tableView dequeueReusableCellWithIdentifier:@"TzItemCell" forIndexPath:indexPath];
     
 	static NSDateFormatter *dateFormatter = nil;
+
 	if (dateFormatter == nil) {
-		dateFormatter = [[NSDateFormatter alloc] init];
+       dateFormatter = [[NSDateFormatter alloc] init];
         NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"HH:mm" options:0 locale:[NSLocale currentLocale]];
 		[dateFormatter setDateFormat:dateFormat];
 	}
@@ -209,17 +218,23 @@
     
     NSMutableArray* items=[[NSMutableArray alloc]init];
     SHADateTimeCellItem* item;
-    NSDate* date=[_groupHeadersByDay objectAtIndex:indexPath.section];
-    
+    NSDate* currentDate=[_groupHeadersByDay objectAtIndex:indexPath.section];
     NSDateComponents *hourComponent = [[NSDateComponents alloc] init];
     hourComponent.hour = indexPath.row;
-    date=[gregorianCalendar dateByAddingComponents:hourComponent toDate:date options:0];
+    currentDate=[gregorianCalendar dateByAddingComponents:hourComponent toDate:currentDate options:0];
+    
+    NSDateComponents *daysDiffComponents;
     
     for (int i=0; i<[_selectedTimezones count]; i++) {
         [dateFormatter setTimeZone:[_selectedTimezones objectAtIndex:i ]];
         item=[[SHADateTimeCellItem alloc]init];
-        item.Value=[dateFormatter stringFromDate:date];
-        [items addObject:item];
+        item.Value=[dateFormatter stringFromDate:currentDate];
+        item.TimeZone=dateFormatter.timeZone;
+/*        daysDiffComponents = [gregorianCalendar components: NSDayCalendarUnit
+                                                     fromDate: currentDate toDate: convertedDate options: 0];
+        item.DayDifference=daysDiffComponents.day;
+ */ 
+ [items addObject:item];
     }
     
     [cell setTimeZoneItems:items];

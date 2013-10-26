@@ -67,9 +67,14 @@ NSMutableArray* _selectedTimezones;
     }
     else
     {
-      NSTimeZone* tz=  [_selectedTimezones objectAtIndex:index];
-        tz=timeZone;
+        if(index<_selectedTimezones.count)
+        {
+                [_selectedTimezones removeObjectAtIndex:index];
+        }
+
+        [_selectedTimezones insertObject:timeZone atIndex:index];
     }
+    
     NSString *fileAndPath = [self dataFilePath];
     NSMutableArray* _selectedTimezonesNames=[[NSMutableArray alloc]init];
  

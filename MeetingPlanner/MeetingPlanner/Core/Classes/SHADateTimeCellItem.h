@@ -11,7 +11,7 @@
 
 @interface SHADateTimeCellItem : SHATimeZone
 @property NSString* Value;
-@property NSString* DayDifference;
+@property int DayDifference;
 @property NSDate* Date;
 @property NSString* Offset;
 
