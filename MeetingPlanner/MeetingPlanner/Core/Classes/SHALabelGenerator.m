@@ -16,11 +16,14 @@ float firstItemLeft=10;
 float left=10;
 float top=5;
 float width=50;
+float dayDiffWidth=20;
+float dayDiffHeight=15;
 float height=20;
 float marginLeft=10;
 int landscapeCount=9;
 int portraitCount=5;
 UIFont* font;
+UIFont* dayDiffFont;
 UIFont* headerFont;
 UIFont* offsetFont;
 
@@ -39,8 +42,9 @@ UIFont* offsetFont;
         {
             
         }
-
+        
         font=[UIFont systemFontOfSize:12];
+        dayDiffFont=[UIFont systemFontOfSize:10];
         headerFont=[UIFont systemFontOfSize:10];
         offsetFont=[UIFont systemFontOfSize:8];
     }
@@ -49,6 +53,9 @@ UIFont* offsetFont;
 
 +(void) addValueLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems
 {
+    for(UIView *subview in [view subviews]) {
+        [subview removeFromSuperview];
+    }
     SHADateTimeCellItem* item;
     item=[timezoneItems objectAtIndex:0];
     UILabel* label=[self addItemLabel:view at:firstItemLeft text:item.Value];
@@ -61,6 +68,7 @@ UIFont* offsetFont;
         item=[timezoneItems objectAtIndex:i];
         float labelLeft= left+(i*(width+marginLeft));
         [self addItemLabel:view at:labelLeft text:item.Value];
+        [self addItemDayDiffLabel:view at:labelLeft text:item.DayDifference];
     }
     
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
@@ -72,6 +80,7 @@ UIFont* offsetFont;
             item=[timezoneItems objectAtIndex:i];
             float labelLeft= left+(i*(width+marginLeft));
             [self addItemLabel:view at:labelLeft text:item.Value];
+            [self addItemDayDiffLabel:view at:labelLeft text:item.DayDifference];
         }
     }
 }
@@ -89,6 +98,33 @@ UIFont* offsetFont;
     label.text=text;
     [view addSubview:label];
     return label;
+}
++(void)addItemDayDiffLabel:(UIView*)view at:(float)left text:(int)dayDiff
+{
+    if(dayDiff==0)
+        return ;
+    
+    UILabel* label=[[UILabel alloc]init];
+    CGRect frame;
+    if(dayDiff>0)
+    {
+        frame=CGRectMake(left+20, top+height, dayDiffWidth, dayDiffHeight);
+        label.textColor=[UIColor blueColor];
+    }
+    else
+    {
+        frame=CGRectMake(left, top+height, dayDiffWidth, dayDiffHeight);
+        label.textColor=[UIColor redColor];
+    }
+    
+    
+    label.frame=frame;
+    label.text=[NSString stringWithFormat:@"%d",dayDiff];
+    label.font=dayDiffFont;
+    label.lineBreakMode=NSLineBreakByTruncatingTail;
+    label.numberOfLines=1;
+    [view addSubview:label];
+    
 }
 
 +(void) addHeaderLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems buttonPressAction:(SHAButtonActionBlock) action
@@ -110,7 +146,7 @@ UIFont* offsetFont;
         CGRect frame=CGRectMake(labelLeft, top, width, view.frame.size.height);
         if([timezoneItems count]<=i)
         {
-                       [self addHeaderItemView:view at:frame timezone:NULL buttonPressAction:action atOrder:i];
+            [self addHeaderItemView:view at:frame timezone:NULL buttonPressAction:action atOrder:i];
         }
         else
         {
@@ -126,7 +162,7 @@ UIFont* offsetFont;
             CGRect frame=CGRectMake(labelLeft, top, width, view.frame.size.height);
             if([timezoneItems count]<=i)
             {
-                    [self addHeaderItemView:view at:frame timezone:NULL buttonPressAction:action atOrder:i];
+                [self addHeaderItemView:view at:frame timezone:NULL buttonPressAction:action atOrder:i];
             }
             else
             {
@@ -151,9 +187,9 @@ UIFont* offsetFont;
     if(timezone != NULL)
     {
         labelText=timezone.Name;
-     offsetLabelText=timezone.TimeZone.abbreviation;
+        offsetLabelText=timezone.TimeZone.abbreviation;
     }
-   
+    
     UILabel* label=[self getHeaderLabelWithText:labelText];
     
     UILabel* offsetLabel=[self getHeaderOffsetLabelWithText:offsetLabelText];

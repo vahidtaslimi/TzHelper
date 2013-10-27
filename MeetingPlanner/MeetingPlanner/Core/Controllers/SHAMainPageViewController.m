@@ -22,10 +22,15 @@
     NSMutableArray *_objects;
     NSMutableArray *_selectedTimezones;
     NSMutableArray *_groupHeadersByDay;
-     NSDate *_selectedDate;
+    NSDate *_selectedDate;
+    NSDateFormatter *_groupHeaderDateFormatter;
+    NSDateFormatter *_currentDateFormatter;
+    NSDateFormatter *_fullDateFormatter;
+    NSString* _currentDateFormatString;
+    NSDateFormatter *_dateFormatter;
 }
 
-@property (nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation SHAMainPageViewController
@@ -35,7 +40,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-
+        
     }
     return self;
 }
@@ -54,23 +59,44 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
- //   UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-   // self.navigationItem.rightBarButtonItem = addButton;
+    //   UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    // self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (SHADetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-     _selectedDate = [NSDate date];
-       [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
+    
+     _currentDateFormatString = @"yyyy.MM.dd HH:mm zzz";
+    
+    _groupHeaderDateFormatter = [[NSDateFormatter alloc] init];
+    [_groupHeaderDateFormatter setDateStyle:NSDateFormatterFullStyle];
+    [_groupHeaderDateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    
+    _currentDateFormatter=[[NSDateFormatter alloc]init];
+    _currentDateFormatter.dateFormat=_currentDateFormatString;
+    
+    _fullDateFormatter=[[NSDateFormatter alloc]init];
+    _fullDateFormatter.dateFormat=_currentDateFormatString;// @"yyyy.MM.dd";
+    
+    _dateFormatter = [[NSDateFormatter alloc] init];
+    NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"HH:mm" options:0 locale:[NSLocale currentLocale]];
+    [_dateFormatter setDateFormat:dateFormat];
+    //[dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    //[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    _selectedDate = [NSDate date];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self loadTimezones];
+    _groupHeaderDateFormatter.timeZone=[_selectedTimezones objectAtIndex:0];
+    
     [self loadGroupHeaders];
-
+    
     [self addHeaderLabels];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:500];
     [self.tableView scrollToRowAtIndexPath:indexPath
-                         atScrollPosition:UITableViewScrollPositionTop
-                                 animated:YES];
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:YES];
 }
 -(void)addHeaderLabels
 {
@@ -82,16 +108,16 @@
     }
     
     [SHALabelGenerator addHeaderLabelsToView:self.timezoneNamesContainer fromTimezones:items buttonPressAction:^(UIButton* button){
-          SHAButton* sender=(SHAButton*)button;
+        SHAButton* sender=(SHAButton*)button;
         if(sender.timeZoneInfo.Order==0)
         {
-            return;
+            //return;
         }
         
-          [self performSegueWithIdentifier:@"TimeZoneSelectionSegue" sender:sender];
+        [self performSegueWithIdentifier:@"TimeZoneSelectionSegue" sender:sender];
         
         
-         }];
+    }];
 }
 
 -(void)handleHeaderTap:(UIButton*)sender
@@ -168,18 +194,6 @@
     _selectedTimezones=[SHALocalDatabase loadSelectedTimeZones];
 }
 
--(NSDateFormatter *)dateFormatter
-{
-    if (!_dateFormatter) {
-        _dateFormatter = [[NSDateFormatter alloc] init];
-        // NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"h:mm a" options:0 locale:[NSLocale currentLocale]];
-        //[_dateFormatter setDateFormat:dateFormat];
-        [_dateFormatter setDateStyle:NSDateFormatterFullStyle];
-        [_dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-    }
-    return _dateFormatter;
-}
-
 
 #pragma mark - Table View
 
@@ -196,21 +210,13 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSDate*  date= [_groupHeadersByDay objectAtIndex:section];
-    return [self.dateFormatter stringFromDate:date];
-    //return [NSString stringWithFormat:@"%@",date];
+    return [_groupHeaderDateFormatter stringFromDate:date];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SHATzListCell *cell =[[SHATzListCell alloc]init];// [tableView dequeueReusableCellWithIdentifier:@"TzItemCell" forIndexPath:indexPath];
-    
-	static NSDateFormatter *dateFormatter = nil;
-
-	if (dateFormatter == nil) {
-       dateFormatter = [[NSDateFormatter alloc] init];
-        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"HH:mm" options:0 locale:[NSLocale currentLocale]];
-		[dateFormatter setDateFormat:dateFormat];
-	}
+    SHATzListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycell" forIndexPath:indexPath];//[[SHATzListCell alloc]init];
+	
     static NSCalendar *gregorianCalendar = nil;
     if(gregorianCalendar==nil ){
         gregorianCalendar=[NSCalendar currentCalendar];
@@ -218,23 +224,47 @@
     
     NSMutableArray* items=[[NSMutableArray alloc]init];
     SHADateTimeCellItem* item;
-    NSDate* currentDate=[_groupHeadersByDay objectAtIndex:indexPath.section];
+    NSDate* currentSectionDate=[_groupHeadersByDay objectAtIndex:indexPath.section];
     NSDateComponents *hourComponent = [[NSDateComponents alloc] init];
     hourComponent.hour = indexPath.row;
-    currentDate=[gregorianCalendar dateByAddingComponents:hourComponent toDate:currentDate options:0];
-    
-    NSDateComponents *daysDiffComponents;
+    currentSectionDate=[gregorianCalendar dateByAddingComponents:hourComponent toDate:currentSectionDate options:0];
+    NSString* currentDateString=[_currentDateFormatter stringFromDate:currentSectionDate];
     
     for (int i=0; i<[_selectedTimezones count]; i++) {
-        [dateFormatter setTimeZone:[_selectedTimezones objectAtIndex:i ]];
+        NSTimeZone* tz=[_selectedTimezones objectAtIndex:i ];
+        [_dateFormatter setTimeZone:tz];
+        _fullDateFormatter.timeZone=tz;
         item=[[SHADateTimeCellItem alloc]init];
-        item.Value=[dateFormatter stringFromDate:currentDate];
-        item.TimeZone=dateFormatter.timeZone;
-/*        daysDiffComponents = [gregorianCalendar components: NSDayCalendarUnit
-                                                     fromDate: currentDate toDate: convertedDate options: 0];
-        item.DayDifference=daysDiffComponents.day;
- */ 
- [items addObject:item];
+        item.Value=[_dateFormatter stringFromDate:currentSectionDate];
+        item.TimeZone=tz;
+      
+        NSString *convertedDateString=[_fullDateFormatter stringFromDate:currentSectionDate];
+        item.Date= [_fullDateFormatter dateFromString:convertedDateString];
+        NSLog(@"Source:   %@",currentDateString);
+        NSLog(@"Target:  %@",convertedDateString);
+     
+        NSDateComponents *currentHeaderDateComponents = [gregorianCalendar components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:currentSectionDate];
+        NSDateComponents *convertedDateComponents = [gregorianCalendar components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:item.Date];
+        long sourceDateInt=(currentHeaderDateComponents.year*10000)+(currentHeaderDateComponents.month*100)+currentHeaderDateComponents.day;
+        long convertedDateInt=(convertedDateComponents.year*10000)+(convertedDateComponents.month*100)+convertedDateComponents.day;
+        
+        if(sourceDateInt>convertedDateInt)
+        {
+            item.DayDifference=-1;
+        }
+        else if(sourceDateInt<convertedDateInt)
+        {
+            item.DayDifference=1;
+        }
+        else
+        {
+            item.DayDifference=0;
+            
+        }
+        //daysDiffComponents = [gregorianCalendar components: NSDayCalendarUnit    fromDate: currentSectionDate toDate: item.Date options: 0];
+        NSLog(@"Source Diff:  %ld",sourceDateInt);
+        NSLog(@"Converted Diff:  %ld",convertedDateInt);
+        [items addObject:item];
     }
     
     [cell setTimeZoneItems:items];
@@ -282,7 +312,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{  
+{
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSDate *object = _objects[indexPath.row];
