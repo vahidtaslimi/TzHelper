@@ -13,12 +13,12 @@
 
 float firstItemWidth=50;
 float firstItemLeft=10;
-float left=10;
-float top=5;
-float width=50;
+float _left=10;
+float _top=5;
+float _width=50;
 float dayDiffWidth=20;
 float dayDiffHeight=15;
-float height=20;
+float _height=20;
 float marginLeft=10;
 int landscapeCount=9;
 int portraitCount=5;
@@ -31,10 +31,10 @@ UIFont* offsetFont;
 {
     if (self) {
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            left=10;
-            top=5;
-            width=60;
-            height=30;
+            _left=10;
+            _top=5;
+            _width=60;
+            _height=30;
             landscapeCount=18;
             portraitCount=10;
         }
@@ -44,7 +44,7 @@ UIFont* offsetFont;
         }
         
         font=[UIFont systemFontOfSize:12];
-        dayDiffFont=[UIFont systemFontOfSize:10];
+        dayDiffFont=[UIFont systemFontOfSize:8];
         headerFont=[UIFont systemFontOfSize:10];
         offsetFont=[UIFont systemFontOfSize:8];
     }
@@ -53,9 +53,11 @@ UIFont* offsetFont;
 
 +(void) addValueLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems
 {
-    for(UIView *subview in [view subviews]) {
+   /* for(UIView *subview in [view subviews]) {
         [subview removeFromSuperview];
     }
+    */
+    
     SHADateTimeCellItem* item;
     item=[timezoneItems objectAtIndex:0];
     UILabel* label=[self addItemLabel:view at:firstItemLeft text:item.Value];
@@ -66,7 +68,7 @@ UIFont* offsetFont;
             return;
         
         item=[timezoneItems objectAtIndex:i];
-        float labelLeft= left+(i*(width+marginLeft));
+        float labelLeft= _left+(i*(_width+marginLeft));
         [self addItemLabel:view at:labelLeft text:item.Value];
         [self addItemDayDiffLabel:view at:labelLeft text:item.DayDifference];
     }
@@ -78,7 +80,7 @@ UIFont* offsetFont;
                 return;
             
             item=[timezoneItems objectAtIndex:i];
-            float labelLeft= left+(i*(width+marginLeft));
+            float labelLeft= _left+(i*(_width+marginLeft));
             [self addItemLabel:view at:labelLeft text:item.Value];
             [self addItemDayDiffLabel:view at:labelLeft text:item.DayDifference];
         }
@@ -89,42 +91,78 @@ UIFont* offsetFont;
 +(UILabel*)addItemLabel:(UIView*)view at:(float)left text:(NSString*)text
 {
     float rotation=0;//M_PI/2;
-    CGRect frame=CGRectMake(left, top, width, height);
-    UILabel* label=[[UILabel alloc]initWithFrame:frame];
-    label.font=font;
-    label.lineBreakMode=NSLineBreakByTruncatingTail;
-    label.numberOfLines=1;
-    label.transform = CGAffineTransformMakeRotation(rotation);//(M_PI_4);
-    label.text=text;
-    [view addSubview:label];
+    UILabel* label=(UILabel*)[view viewWithTag:left+_top];
+    if(label==NULL)
+    {
+        
+        CGRect frame=CGRectMake(left, _top, _width, _height);
+        label=[[UILabel alloc]initWithFrame:frame];
+        label.tag=left+_top;
+        label.font=font;
+        label.lineBreakMode=NSLineBreakByTruncatingTail;
+        label.numberOfLines=1;
+        label.transform = CGAffineTransformMakeRotation(rotation);//(M_PI_4);
+        [view addSubview:label];
+    }
+      label.text=text;
     return label;
 }
 +(void)addItemDayDiffLabel:(UIView*)view at:(float)left text:(int)dayDiff
 {
-    if(dayDiff==0)
-        return ;
-    
-    UILabel* label=[[UILabel alloc]init];
-    CGRect frame;
-    if(dayDiff>0)
+    int top=_top+_height;
+    UILabel* label=(UILabel*)[view viewWithTag:left+top];
+    UILabel* labelPlusOne=(UILabel*)[view viewWithTag:left+top+20];
+    if(label==NULL)
     {
-        frame=CGRectMake(left+20, top+height, dayDiffWidth, dayDiffHeight);
-        label.textColor=[UIColor blueColor];
+       NSLog(@"Crating a new label");
+        UILabel* label=[[UILabel alloc]init];
+        CGRect frame;
+        frame=CGRectMake(left, top, dayDiffWidth, dayDiffHeight);
+        label.textColor=[UIColor redColor];
+
+        label.tag=left+top;
+       label.frame=frame;
+        label.font=dayDiffFont;
+        label.lineBreakMode=NSLineBreakByTruncatingTail;
+        label.numberOfLines=1;
+        [view addSubview:label];
+    }
+    if(labelPlusOne==NULL)
+    {
+        UILabel* labelPlusOne=[[UILabel alloc]init];
+        CGRect frame;
+        frame=CGRectMake(left+20, top, dayDiffWidth, dayDiffHeight);
+        labelPlusOne.textColor=[UIColor blueColor];
+
+        labelPlusOne.tag=left+top+20;
+        labelPlusOne.frame=frame;
+        labelPlusOne.font=dayDiffFont;
+        labelPlusOne.lineBreakMode=NSLineBreakByTruncatingTail;
+        labelPlusOne.numberOfLines=1;
+        [view addSubview:labelPlusOne];
+    }
+    
+    if(dayDiff==0)
+    {
+        labelPlusOne.text=@"";
+        label.text=@"";
+        labelPlusOne.hidden=true;
+        label.hidden=true;
+    }
+    else if(dayDiff>0)
+    {
+        labelPlusOne.text=[NSString stringWithFormat:@"+%d",dayDiff];
+        label.text=@"";
+        labelPlusOne.hidden=false;
+        label.hidden=true;
     }
     else
     {
-        frame=CGRectMake(left, top+height, dayDiffWidth, dayDiffHeight);
-        label.textColor=[UIColor redColor];
+        labelPlusOne.text=@"";
+        label.text=[NSString stringWithFormat:@"%d",dayDiff];
+        labelPlusOne.hidden=true;
+        label.hidden=false;
     }
-    
-    
-    label.frame=frame;
-    label.text=[NSString stringWithFormat:@"%d",dayDiff];
-    label.font=dayDiffFont;
-    label.lineBreakMode=NSLineBreakByTruncatingTail;
-    label.numberOfLines=1;
-    [view addSubview:label];
-    
 }
 
 +(void) addHeaderLabelsToView:(UIView*)view fromTimezones:(NSMutableArray* )timezoneItems buttonPressAction:(SHAButtonActionBlock) action
@@ -135,15 +173,15 @@ UIFont* offsetFont;
     }
     SHATimeZone* item;
     item=[timezoneItems objectAtIndex:0];
-    CGRect frame=CGRectMake(firstItemLeft, top, firstItemWidth, view.frame.size.height);
+    CGRect frame=CGRectMake(firstItemLeft, _top, firstItemWidth, view.frame.size.height);
     
     //label.font=[UIFont boldSystemFontOfSize:10];
     [self addHeaderItemView:view at:frame timezone:item buttonPressAction:action atOrder:0];
     
     
     for (int i=1; i<portraitCount; i++) {
-        float labelLeft= left+(i*(width+marginLeft));
-        CGRect frame=CGRectMake(labelLeft, top, width, view.frame.size.height);
+        float labelLeft= _left+(i*(_width+marginLeft));
+        CGRect frame=CGRectMake(labelLeft, _top, _width, view.frame.size.height);
         if([timezoneItems count]<=i)
         {
             [self addHeaderItemView:view at:frame timezone:NULL buttonPressAction:action atOrder:i];
@@ -158,8 +196,8 @@ UIFont* offsetFont;
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
     {
         for (int i=portraitCount; i<landscapeCount; i++) {
-            float labelLeft= left+(i*(width+marginLeft));
-            CGRect frame=CGRectMake(labelLeft, top, width, view.frame.size.height);
+            float labelLeft= _left+(i*(_width+marginLeft));
+            CGRect frame=CGRectMake(labelLeft, _top, _width, view.frame.size.height);
             if([timezoneItems count]<=i)
             {
                 [self addHeaderItemView:view at:frame timezone:NULL buttonPressAction:action atOrder:i];
@@ -202,7 +240,7 @@ UIFont* offsetFont;
 
 +(UILabel*)getHeaderOffsetLabelWithText:(NSString*)text
 {
-    CGRect frame=CGRectMake(0, 20, width, 20);
+    CGRect frame=CGRectMake(0, 20, _width, 20);
     UILabel* label=[[UILabel alloc]initWithFrame:frame];
     label.font=offsetFont;
     label.lineBreakMode=NSLineBreakByTruncatingTail;
@@ -213,7 +251,7 @@ UIFont* offsetFont;
 }
 +(UILabel*)getHeaderLabelWithText:(NSString*)text
 {
-    CGRect frame=CGRectMake(0, 0, width, height);
+    CGRect frame=CGRectMake(0, 0, _width, _height);
     UILabel* label=[[UILabel alloc]initWithFrame:frame];
     label.font=headerFont;
     label.lineBreakMode=NSLineBreakByTruncatingTail;

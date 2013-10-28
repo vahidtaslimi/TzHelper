@@ -28,6 +28,8 @@
     NSDateFormatter *_fullDateFormatter;
     NSString* _currentDateFormatString;
     NSDateFormatter *_dateFormatter;
+    NSCalendar *_gregorianCalendar;
+    
 }
 
 
@@ -63,6 +65,7 @@
     // self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (SHADetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
+        _gregorianCalendar=[NSCalendar currentCalendar];
      _currentDateFormatString = @"yyyy.MM.dd HH:mm zzz";
     
     _groupHeaderDateFormatter = [[NSDateFormatter alloc] init];
@@ -216,57 +219,60 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SHATzListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycell" forIndexPath:indexPath];//[[SHATzListCell alloc]init];
-	
-    static NSCalendar *gregorianCalendar = nil;
-    if(gregorianCalendar==nil ){
-        gregorianCalendar=[NSCalendar currentCalendar];
-    }
-    
+	    
     NSMutableArray* items=[[NSMutableArray alloc]init];
     SHADateTimeCellItem* item;
     NSDate* currentSectionDate=[_groupHeadersByDay objectAtIndex:indexPath.section];
     NSDateComponents *hourComponent = [[NSDateComponents alloc] init];
     hourComponent.hour = indexPath.row;
-    currentSectionDate=[gregorianCalendar dateByAddingComponents:hourComponent toDate:currentSectionDate options:0];
-    NSString* currentDateString=[_currentDateFormatter stringFromDate:currentSectionDate];
+    currentSectionDate=[_gregorianCalendar dateByAddingComponents:hourComponent toDate:currentSectionDate options:0];
+    
+    NSCalendar* calendar=[NSCalendar currentCalendar];
+    NSDateComponents *dateComponents;
+    NSInteger currentDateDayOfWeek, convertedDateDayOfWeek;
     
     for (int i=0; i<[_selectedTimezones count]; i++) {
         NSTimeZone* tz=[_selectedTimezones objectAtIndex:i ];
         [_dateFormatter setTimeZone:tz];
-        _fullDateFormatter.timeZone=tz;
         item=[[SHADateTimeCellItem alloc]init];
         item.Value=[_dateFormatter stringFromDate:currentSectionDate];
         item.TimeZone=tz;
       
-        NSString *convertedDateString=[_fullDateFormatter stringFromDate:currentSectionDate];
-        item.Date= [_fullDateFormatter dateFromString:convertedDateString];
-        NSLog(@"Source:   %@",currentDateString);
-        NSLog(@"Target:  %@",convertedDateString);
-     
-        NSDateComponents *currentHeaderDateComponents = [gregorianCalendar components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:currentSectionDate];
-        NSDateComponents *convertedDateComponents = [gregorianCalendar components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:item.Date];
-        long sourceDateInt=(currentHeaderDateComponents.year*10000)+(currentHeaderDateComponents.month*100)+currentHeaderDateComponents.day;
-        long convertedDateInt=(convertedDateComponents.year*10000)+(convertedDateComponents.month*100)+convertedDateComponents.day;
         
-        if(sourceDateInt>convertedDateInt)
-        {
-            item.DayDifference=-1;
-        }
-        else if(sourceDateInt<convertedDateInt)
-        {
-            item.DayDifference=1;
-        }
-        else
-        {
-            item.DayDifference=0;
-            
-        }
-        //daysDiffComponents = [gregorianCalendar components: NSDayCalendarUnit    fromDate: currentSectionDate toDate: item.Date options: 0];
-        NSLog(@"Source Diff:  %ld",sourceDateInt);
-        NSLog(@"Converted Diff:  %ld",convertedDateInt);
+		// Set the calendar's time zone to the default time zone.
+		[calendar setTimeZone:[_selectedTimezones objectAtIndex:0]];
+		dateComponents = [calendar components:NSWeekdayCalendarUnit fromDate:currentSectionDate];
+		currentDateDayOfWeek = [dateComponents weekday];
+		
+		[calendar setTimeZone:tz];
+		dateComponents = [calendar components:NSWeekdayCalendarUnit fromDate:currentSectionDate];
+		convertedDateDayOfWeek = [dateComponents weekday];
+		
+		NSRange dayRange = [calendar maximumRangeOfUnit:NSWeekdayCalendarUnit];
+		NSInteger maxDay = NSMaxRange(dayRange) - 1;
+		
+		if (currentDateDayOfWeek == convertedDateDayOfWeek) {
+			 item.DayDifference=0;
+		}
+        else {
+			if ((convertedDateDayOfWeek - currentDateDayOfWeek) > 0) {
+                  item.DayDifference=1;
+			} else {
+                item.DayDifference=-1;
+			}
+			// Special cases for days at the end of the week
+			if ((currentDateDayOfWeek == maxDay) && (convertedDateDayOfWeek == 1)) {
+                  item.DayDifference=1;
+			}
+			if ((currentDateDayOfWeek == 1) && (convertedDateDayOfWeek == maxDay)) {
+                item.DayDifference=-1;
+			}
+		}
+
         [items addObject:item];
     }
     
+
     [cell setTimeZoneItems:items];
     return cell;
 }
