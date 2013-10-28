@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SHATimeZone.h"
 
-@interface SHATimeZoneSelectionViewController : UITableViewController
+@interface SHATimeZoneSelectionViewController : UITableViewController<UISearchBarDelegate>
 @property (nonatomic) NSMutableArray *sectionsArray;
 @property (nonatomic) UILocalizedIndexedCollation *collation;
 @property (nonatomic, copy) NSMutableArray *timeZonesArray;
+@property (nonatomic, copy) NSMutableArray *searchResultTimeZonesArray;
 @property SHATimeZone* selectedTimeZone;
 
-- (void)configureSections;
+- (void)configureSectionsForTimeZoneArray:(NSMutableArray*)tzArray ;
 
 @end

@@ -319,12 +319,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = _objects[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
-    }
-    else if([[segue identifier] isEqualToString:@"TimeZoneSelectionSegue"])
+    if([[segue identifier] isEqualToString:@"TimeZoneSelectionSegue"])
     {
         SHATimeZoneSelectionViewController* controller=[segue destinationViewController];
         SHAButton* button=(SHAButton*)sender;

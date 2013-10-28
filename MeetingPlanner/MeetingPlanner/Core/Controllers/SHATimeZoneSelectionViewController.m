@@ -13,9 +13,11 @@
 
 @interface SHATimeZoneSelectionViewController ()
 
+
 @end
 
 @implementation SHATimeZoneSelectionViewController
+NSMutableArray* _searchResult;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,10 +44,10 @@
 	}
     
 	self.timeZonesArray = timeZones;
-
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -116,7 +118,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSArray *timeZonesInSection = (self.sectionsArray)[indexPath.section];
+	NSArray *timeZonesInSection;
+    timeZonesInSection= (self.sectionsArray)[indexPath.section];
+    
 	SHATimeZoneWrapper *timeZone = timeZonesInSection[indexPath.row];
     [SHALocalDatabase updateSelectedTimeZonesAtIndex:self.selectedTimeZone.Order withValue:timeZone.timeZone];
     [self.navigationController popViewControllerAnimated:YES];
@@ -127,6 +131,40 @@
 /*
  Configuring the sections is a little fiddly, and it's not directly relevant to understanding how sectioned table views themselves work, so there's no need to work though these methods if you don't want to.
  */
+#pragma mark - SearchBar Delegate -
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
+    if (searchText.length == 0)
+    {
+        _searchResult=NULL;
+        [self configureSectionsForTimeZoneArray:self.timeZonesArray];
+        return;
+    }
+    else
+        _searchResult=[[NSMutableArray alloc]init];
+    
+    NSMutableArray *tmpSearched = [[NSMutableArray alloc] init];
+    
+    for (SHATimeZoneWrapper *tz in self.timeZonesArray) {
+
+        NSRange range = [tz.timeZone.name rangeOfString:searchText
+                                                options:NSCaseInsensitiveSearch];
+        
+        if (range.location != NSNotFound)
+        {
+            [tmpSearched addObject:tz];
+        }
+    }
+    
+    [self configureSectionsForTimeZoneArray:tmpSearched];
+    //searchedData = tmpSearched.copy;
+    
+    [self.tableView reloadData];
+}
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    NSLog(@"searchBar button clicked");
+}
+
 
 - (void)setTimeZonesArray:(NSMutableArray *)newDataArray {
     
@@ -136,13 +174,13 @@
             self.sectionsArray = nil;
         }
         else {
-            [self configureSections];
+            [self configureSectionsForTimeZoneArray:self.timeZonesArray];
         }
 	}
 }
 
 
-- (void)configureSections {
+- (void)configureSectionsForTimeZoneArray:(NSMutableArray*)tzArray {
     
 	// Get the current collation and keep a reference to it.
 	self.collation = [UILocalizedIndexedCollation currentCollation];
@@ -158,7 +196,7 @@
 	}
     
 	// Segregate the time zones into the appropriate arrays.
-	for (SHATimeZoneWrapper *timeZone in self.timeZonesArray) {
+	for (SHATimeZoneWrapper *timeZone in tzArray) {
         
 		// Ask the collation which section number the time zone belongs in, based on its locale name.
 		NSInteger sectionNumber = [self.collation sectionForObject:timeZone collationStringSelector:@selector(localeName)];
