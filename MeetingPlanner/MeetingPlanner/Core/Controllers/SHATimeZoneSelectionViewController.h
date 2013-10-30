@@ -15,6 +15,8 @@
 @property (nonatomic, copy) NSMutableArray *timeZonesArray;
 @property (nonatomic, copy) NSMutableArray *searchResultTimeZonesArray;
 @property SHATimeZone* selectedTimeZone;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *deleteButton;
+- (IBAction)deleteButtonAction:(id)sender;
 
 - (void)configureSectionsForTimeZoneArray:(NSMutableArray*)tzArray ;
 

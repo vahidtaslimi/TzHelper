@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="rS3-R9-Ivy">
     <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <scenes>
@@ -94,7 +95,7 @@
             </objects>
             <point key="canvasLocation" x="47" y="848"/>
         </scene>
-        <!--Main Page View Controller-->
+        <!--Main Page View Controller - Time Zone Convertor-->
         <scene sceneID="waH-az-aIm">
             <objects>
                 <viewController id="8mF-w8-3Mj" customClass="SHAMainPageViewController" sceneMemberID="viewController">
@@ -129,7 +130,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="yZe-1M-ynW"/>
+                    <navigationItem key="navigationItem" title="Time Zone Convertor" id="yZe-1M-ynW"/>
                     <connections>
                         <outlet property="tableView" destination="5aj-6c-OBi" id="Na7-Q2-0x8"/>
                         <outlet property="timezoneNamesContainer" destination="jPw-1F-811" id="QvG-kd-YlX"/>
@@ -144,11 +145,11 @@
         <scene sceneID="3XP-94-hIB">
             <objects>
                 <tableViewController id="JyU-jz-qvf" customClass="SHATimeZoneSelectionViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" id="hmv-sJ-C2N">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" id="hmv-sJ-C2N">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="BDE-8g-kHr">
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="search" showsSearchResultsButton="YES" id="BDE-8g-kHr">
                             <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
@@ -198,7 +199,16 @@
                             <outlet property="delegate" destination="JyU-jz-qvf" id="mcp-aH-clx"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="LUb-BE-S6r"/>
+                    <navigationItem key="navigationItem" id="LUb-BE-S6r">
+                        <barButtonItem key="rightBarButtonItem" title="Delete" id="eSb-Lq-JR1">
+                            <connections>
+                                <action selector="deleteButtonAction:" destination="JyU-jz-qvf" id="6b7-oi-IAz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="deleteButton" destination="eSb-Lq-JR1" id="f4O-nP-1ru"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pjo-Ec-7sm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

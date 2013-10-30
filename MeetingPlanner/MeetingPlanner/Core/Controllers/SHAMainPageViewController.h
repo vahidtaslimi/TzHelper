@@ -15,7 +15,4 @@
 @property (retain, nonatomic) IBOutlet UIView *timezoneNamesContainer;
 
 
-@property (strong, nonatomic) SHADetailViewController *detailViewController;
-
-
 @end

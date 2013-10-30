@@ -15,7 +15,7 @@ NSMutableArray* _selectedTimezones;
 + (void)initialize
 {
     if (self) {
-
+        
     }
     
 }
@@ -32,16 +32,16 @@ NSMutableArray* _selectedTimezones;
         [_selectedTimezonesNames addObject:@"Australia/Perth"] ;
         [_selectedTimezonesNames  addObject:@"Asia/Tehran"] ;
         [_selectedTimezonesNames addObject:@"Europe/Amsterdam"] ;
-       /* [_selectedTimezonesNames addObject:@"GMT"];
-        [_selectedTimezonesNames addObject:@"America/Los_Angeles"] ;
-        [_selectedTimezonesNames addObject:@"Asia/Damascus"] ;
-        [_selectedTimezonesNames addObject:@"Asia/Phnom_Penh"] ;
-        [_selectedTimezonesNames addObject:@"Atlantic/Azores"];
-        [_selectedTimezonesNames addObject:@"Europe/Moscow"];
-        [_selectedTimezonesNames addObject:@"Europe/Paris"] ;
-        */
-        BOOL success =[_selectedTimezonesNames writeToFile:fileAndPath atomically:YES];
-     }
+        /* [_selectedTimezonesNames addObject:@"GMT"];
+         [_selectedTimezonesNames addObject:@"America/Los_Angeles"] ;
+         [_selectedTimezonesNames addObject:@"Asia/Damascus"] ;
+         [_selectedTimezonesNames addObject:@"Asia/Phnom_Penh"] ;
+         [_selectedTimezonesNames addObject:@"Atlantic/Azores"];
+         [_selectedTimezonesNames addObject:@"Europe/Moscow"];
+         [_selectedTimezonesNames addObject:@"Europe/Paris"] ;
+         */
+        [_selectedTimezonesNames writeToFile:fileAndPath atomically:YES];
+    }
     else
     {
         _selectedTimezonesNames=[[NSMutableArray alloc]initWithContentsOfFile:fileAndPath];
@@ -52,38 +52,43 @@ NSMutableArray* _selectedTimezones;
         NSTimeZone* tz=[NSTimeZone timeZoneWithName:[_selectedTimezonesNames objectAtIndex:i]];
         [_selectedTimezones addObject:tz];
     }
-            return _selectedTimezones;
+    return _selectedTimezones;
 }
 
 +(void)updateSelectedTimeZonesAtIndex:(int)index withValue:(NSTimeZone*)timeZone
 {
-    if(index>_selectedTimezones.count)
+    if(index>_selectedTimezones.count && timeZone == NULL)
     {
         return;
     }
     if(timeZone==NULL)
     {
-     [_selectedTimezones removeObjectAtIndex:index];
+        id tz=  [_selectedTimezones objectAtIndex:index];
+        [_selectedTimezones removeObject:tz];
     }
     else
     {
         if(index<_selectedTimezones.count)
         {
-                [_selectedTimezones removeObjectAtIndex:index];
+            [_selectedTimezones removeObjectAtIndex:index];
         }
-
+        else if(index>_selectedTimezones.count)
+        {
+            index=_selectedTimezones.count;
+        }
+        
         [_selectedTimezones insertObject:timeZone atIndex:index];
     }
     
     NSString *fileAndPath = [self dataFilePath];
     NSMutableArray* _selectedTimezonesNames=[[NSMutableArray alloc]init];
- 
+    
     for (int i=0; i<_selectedTimezones.count; i++) {
         NSTimeZone* timezone=[_selectedTimezones objectAtIndex:i];
         [_selectedTimezonesNames addObject:timezone.name];
     }
     
-       BOOL success = [_selectedTimezonesNames writeToFile:fileAndPath atomically:YES];
+    [_selectedTimezonesNames writeToFile:fileAndPath atomically:YES];
 }
 
 +(void)saveSelectedTimeZones:(NSMutableArray*)selectedTimeZones

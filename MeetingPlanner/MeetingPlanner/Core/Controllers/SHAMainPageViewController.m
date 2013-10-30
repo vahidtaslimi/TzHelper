@@ -59,11 +59,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+   // self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     //   UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     // self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (SHADetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
         _gregorianCalendar=[NSCalendar currentCalendar];
      _currentDateFormatString = @"yyyy.MM.dd HH:mm zzz";
@@ -89,17 +88,19 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    [self loadTimezones];
+     [self loadTimezones];
     _groupHeaderDateFormatter.timeZone=[_selectedTimezones objectAtIndex:0];
     
     [self loadGroupHeaders];
     
     [self addHeaderLabels];
+    [self.tableView reloadData];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:500];
     [self.tableView scrollToRowAtIndexPath:indexPath
                           atScrollPosition:UITableViewScrollPositionTop
                                   animated:YES];
+
+   [super viewWillAppear:animated];
 }
 -(void)addHeaderLabels
 {
@@ -312,8 +313,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSDate *object = _objects[indexPath.row];
-        self.detailViewController.detailItem = object;
+        NSDate *object = _objects[indexPath.row];        
     }
 }
 

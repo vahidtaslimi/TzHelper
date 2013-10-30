@@ -25,15 +25,24 @@ UILabel* label;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
 -(void) setTimeZoneItems:(NSMutableArray* )timezoneItems
 {
-   UIView* view=self.contentView;
+    UIView* view=self.contentView;
     [SHALabelGenerator addValueLabelsToView:view fromTimezones:timezoneItems];
     
 }
 
+- (void) prepareForReuse
+{
+    for (int i=0; i<self.contentView.subviews.count; i++) {
+        if([self.contentView.subviews[i] isKindOfClass:[UILabel class]])
+        {
+           ((UILabel*) self.contentView.subviews[i]).text=@"";
+        }
+    }
+}
 @end

@@ -55,6 +55,15 @@ NSMutableArray* _searchResult;
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationItem.title=self.selectedTimeZone.Name;
+    if(self.selectedTimeZone.TimeZone==NULL)
+    {
+        [self.deleteButton setEnabled:false];
+    }
+    else
+    {
+        [self.deleteButton setEnabled:true];
+    }
+    
     [super viewWillAppear:animated];
 }
 
@@ -67,17 +76,25 @@ NSMutableArray* _searchResult;
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	// The number of sections is the same as the number of titles in the collation.
-    return [[self.collation sectionTitles] count];
+    if(_searchResult==NULL)
+	{// The number of sections is the same as the number of titles in the collation.
+        return [[self.collation sectionTitles] count];
+    }
+    else
+        return 1; // Search Result
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-	// The number of time zones in the section is the count of the array associated with the section in the sections array.
-	NSArray *timeZonesInSection = (self.sectionsArray)[section];
-    
-    return [timeZonesInSection count];
+    if(_searchResult==NULL){
+        // The number of time zones in the section is the count of the array associated with the section in the sections array.
+        NSArray *timeZonesInSection = (self.sectionsArray)[section];
+        
+        return [timeZonesInSection count];
+    }
+    else
+        return _searchResult.count;
 }
 
 
@@ -86,11 +103,19 @@ NSMutableArray* _searchResult;
     static NSString *CellIdentifier = @"timeZoneSelectionCell";
     SHATimeZoneSeletctionCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-	// Get the time zone from the array associated with the section index in the sections array.
-	NSArray *timeZonesInSection = (self.sectionsArray)[indexPath.section];
-    
-	// Configure the cell with the time zone's name.
-	SHATimeZoneWrapper *timeZone = timeZonesInSection[indexPath.row];
+    SHATimeZoneWrapper *timeZone;
+    if(_searchResult ==NULL)
+    {
+        // Get the time zone from the array associated with the section index in the sections array.
+        NSArray *timeZonesInSection = (self.sectionsArray)[indexPath.section];
+        
+        // Configure the cell with the time zone's name.
+        timeZone = timeZonesInSection[indexPath.row];
+    }
+    else
+    {
+        timeZone=[_searchResult objectAtIndex:indexPath.row];
+    }
     cell.titleLabel.text = timeZone.localeName;
     cell.offsetLabel.text=timeZone.timeZone.abbreviation;
     cell.regionLabel.text=timeZone.region;
@@ -103,25 +128,51 @@ NSMutableArray* _searchResult;
  */
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.collation sectionTitles][section];
+    if(_searchResult ==NULL)
+    {
+        return [self.collation sectionTitles][section];
+    }
+    else{
+        return @"Search Result";
+    }
 }
 
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [self.collation sectionIndexTitles];
+    if(_searchResult ==NULL)
+    {
+        return [self.collation sectionIndexTitles];
+    }
+    else
+        return NULL;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return [self.collation sectionForSectionIndexTitleAtIndex:index];
+    if(_searchResult ==NULL)
+    {
+        return [self.collation sectionForSectionIndexTitleAtIndex:index];
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSArray *timeZonesInSection;
-    timeZonesInSection= (self.sectionsArray)[indexPath.section];
-    
-	SHATimeZoneWrapper *timeZone = timeZonesInSection[indexPath.row];
+	SHATimeZoneWrapper *timeZone;
+    if(_searchResult ==NULL)
+    {
+        timeZonesInSection= (self.sectionsArray)[indexPath.section];
+        
+        timeZone= timeZonesInSection[indexPath.row];
+    }
+    else
+    {
+        timeZone= [_searchResult objectAtIndex:indexPath.row];
+    }
     [SHALocalDatabase updateSelectedTimeZonesAtIndex:self.selectedTimeZone.Order withValue:timeZone.timeZone];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -138,26 +189,25 @@ NSMutableArray* _searchResult;
     {
         _searchResult=NULL;
         [self configureSectionsForTimeZoneArray:self.timeZonesArray];
+          [self.tableView reloadData];
         return;
     }
     else
         _searchResult=[[NSMutableArray alloc]init];
     
-    NSMutableArray *tmpSearched = [[NSMutableArray alloc] init];
-    
     for (SHATimeZoneWrapper *tz in self.timeZonesArray) {
-
+        
         NSRange range = [tz.timeZone.name rangeOfString:searchText
                                                 options:NSCaseInsensitiveSearch];
         
         if (range.location != NSNotFound)
         {
-            [tmpSearched addObject:tz];
+            [_searchResult addObject:tz];
         }
     }
     
-    [self configureSectionsForTimeZoneArray:tmpSearched];
-    //searchedData = tmpSearched.copy;
+    //[self configureSectionsForTimeZoneArray:tmpSearched];
+    //_searchResult = tmpSearched.copy;
     
     [self.tableView reloadData];
 }
@@ -179,6 +229,11 @@ NSMutableArray* _searchResult;
 	}
 }
 
+
+- (IBAction)deleteButtonAction:(id)sender {
+    [SHALocalDatabase updateSelectedTimeZonesAtIndex:self.selectedTimeZone.Order withValue:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)configureSectionsForTimeZoneArray:(NSMutableArray*)tzArray {
     
