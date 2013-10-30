@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SHADetailViewController.h"
 #import "SHAButton.h"
 
 @interface SHAMainPageViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>

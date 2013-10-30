@@ -25,8 +25,6 @@
 		F2A65D8818166829004EB2EE /* SHAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A65D8718166829004EB2EE /* SHAAppDelegate.m */; };
 		F2A65D8B18166829004EB2EE /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2A65D8918166829004EB2EE /* Main_iPhone.storyboard */; };
 		F2A65D8E18166829004EB2EE /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2A65D8C18166829004EB2EE /* Main_iPad.storyboard */; };
-		F2A65D9118166829004EB2EE /* SHAMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A65D9018166829004EB2EE /* SHAMasterViewController.m */; };
-		F2A65D9418166829004EB2EE /* SHADetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A65D9318166829004EB2EE /* SHADetailViewController.m */; };
 		F2A65D9618166829004EB2EE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2A65D9518166829004EB2EE /* Images.xcassets */; };
 		F2A65D9D18166829004EB2EE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A65D9C18166829004EB2EE /* XCTest.framework */; };
 		F2A65D9E18166829004EB2EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A65D7718166829004EB2EE /* Foundation.framework */; };
@@ -80,10 +78,6 @@
 		F2A65D8718166829004EB2EE /* SHAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHAAppDelegate.m; sourceTree = "<group>"; };
 		F2A65D8A18166829004EB2EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		F2A65D8D18166829004EB2EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		F2A65D8F18166829004EB2EE /* SHAMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHAMasterViewController.h; sourceTree = "<group>"; };
-		F2A65D9018166829004EB2EE /* SHAMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHAMasterViewController.m; sourceTree = "<group>"; };
-		F2A65D9218166829004EB2EE /* SHADetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHADetailViewController.h; sourceTree = "<group>"; };
-		F2A65D9318166829004EB2EE /* SHADetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHADetailViewController.m; sourceTree = "<group>"; };
 		F2A65D9518166829004EB2EE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F2A65D9B18166829004EB2EE /* MeetingPlannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeetingPlannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A65D9C18166829004EB2EE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -169,10 +163,6 @@
 				F2A65D8718166829004EB2EE /* SHAAppDelegate.m */,
 				F2A65D8918166829004EB2EE /* Main_iPhone.storyboard */,
 				F2A65D8C18166829004EB2EE /* Main_iPad.storyboard */,
-				F2A65D8F18166829004EB2EE /* SHAMasterViewController.h */,
-				F2A65D9018166829004EB2EE /* SHAMasterViewController.m */,
-				F2A65D9218166829004EB2EE /* SHADetailViewController.h */,
-				F2A65D9318166829004EB2EE /* SHADetailViewController.m */,
 				F2A65D9518166829004EB2EE /* Images.xcassets */,
 				F2A65D7E18166829004EB2EE /* Supporting Files */,
 			);
@@ -360,14 +350,12 @@
 				F2590574181AB51A00787567 /* SHAButton.m in Sources */,
 				F2A65DBD18166FFA004EB2EE /* SHATzListCell.m in Sources */,
 				F2A1225D1819145A00823331 /* SHAMainPageViewController.m in Sources */,
-				F2A65D9118166829004EB2EE /* SHAMasterViewController.m in Sources */,
 				F259057018192A4A00787567 /* SHARegion.m in Sources */,
 				F259056B181929EE00787567 /* SHATimeZoneHelper.m in Sources */,
 				F2590580181BE5F400787567 /* SHALocalDatabase.m in Sources */,
 				F259057D181BD5B600787567 /* SHATimeZoneSeletctionCell.m in Sources */,
 				F2A65D8418166829004EB2EE /* main.m in Sources */,
 				F259057118192A4A00787567 /* SHATimeZoneWrapper.m in Sources */,
-				F2A65D9418166829004EB2EE /* SHADetailViewController.m in Sources */,
 				F2A65D8818166829004EB2EE /* SHAAppDelegate.m in Sources */,
 				F259057A181BD19200787567 /* SHATimeZoneSelectionViewController.m in Sources */,
 			);

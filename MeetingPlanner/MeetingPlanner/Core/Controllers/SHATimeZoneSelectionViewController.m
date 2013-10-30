@@ -54,8 +54,8 @@ NSMutableArray* _searchResult;
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationItem.title=self.selectedTimeZone.Name;
-    if(self.selectedTimeZone.TimeZone==NULL)
+    self.navigationItem.title=self.selectedTimeZone.name;
+    if(self.selectedTimeZone.timeZone==NULL)
     {
         [self.deleteButton setEnabled:false];
     }

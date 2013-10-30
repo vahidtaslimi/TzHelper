@@ -62,7 +62,7 @@ UIFont* _boldFont;
     
     SHADateTimeCellItem* item;
     item=[timezoneItems objectAtIndex:0];
-    UILabel* label=[self addItemLabel:view at:_firstItemLeft text:item.Value];
+    UILabel* label=[self addItemLabel:view at:_firstItemLeft text:item.value];
     label.font=_boldFont;
     
     for (int i=1; i<_portraitCount; i++) {
@@ -71,8 +71,8 @@ UIFont* _boldFont;
         
         item=[timezoneItems objectAtIndex:i];
         float labelLeft= _left+(i*(_width+_marginLeft));
-        [self addItemLabel:view at:labelLeft text:item.Value];
-        [self addItemDayDiffLabel:view at:labelLeft text:item.DayDifference];
+        [self addItemLabel:view at:labelLeft text:item.value];
+        [self addItemDayDiffLabel:view at:labelLeft text:item.dayDifference];
     }
     
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
@@ -83,8 +83,8 @@ UIFont* _boldFont;
             
             item=[timezoneItems objectAtIndex:i];
             float labelLeft= _left+(i*(_width+_marginLeft));
-            [self addItemLabel:view at:labelLeft text:item.Value];
-            [self addItemDayDiffLabel:view at:labelLeft text:item.DayDifference];
+            [self addItemLabel:view at:labelLeft text:item.value];
+            [self addItemDayDiffLabel:view at:labelLeft text:item.dayDifference];
         }
     }
 }
@@ -220,26 +220,32 @@ UIFont* _boldFont;
     SHAButton* button=[[SHAButton alloc]initWithFrame:frame];
     [button handleControlEvent:UIControlEventTouchUpInside withBlock:action];
     button.timeZoneInfo.Order=order;
-    button.timeZoneInfo.Name=timezone.Name;
-    button.timeZoneInfo.TimeZone=timezone.TimeZone;
+    button.timeZoneInfo.Name=timezone.name;
+    button.timeZoneInfo.TimeZone=timezone.timeZone;
     NSString* labelText=@"Select";
     NSString* offsetLabelText=@"+";
     if(timezone != NULL)
     {
-        labelText=timezone.Name;
-        offsetLabelText=timezone.TimeZone.abbreviation;
+        labelText=timezone.name;
+        offsetLabelText=timezone.timeZone.abbreviation;
+        UILabel* label=[self getHeaderLabelWithText:labelText];
+        if(order==0)
+        {
+            label.font=_boldFont;
+        }
+        UILabel* offsetLabel=[self getHeaderOffsetLabelWithText:offsetLabelText];
+        [button addSubview:offsetLabel];
+        [button addSubview:label];
+        [view addSubview:button];
+
     }
-    
-    UILabel* label=[self getHeaderLabelWithText:labelText];
-    if(order==0)
+    else
     {
-        label.font=_boldFont;
+        UILabel* label=[self getHeaderAddTimeZoneLabel];
+        [button addSubview:label];
+        [view addSubview:button];
     }
-    UILabel* offsetLabel=[self getHeaderOffsetLabelWithText:offsetLabelText];
-    [button addSubview:offsetLabel];
-    [button addSubview:label];
-    [view addSubview:button];
-    //button.backgroundColor=[UIColor redColor];
+
     return button;
 }
 
@@ -263,6 +269,17 @@ UIFont* _boldFont;
     label.numberOfLines=1;
     label.text=text;
     //label.backgroundColor=[UIColor blueColor];
+    return label;
+}
+
++(UILabel*)getHeaderAddTimeZoneLabel
+{
+    CGRect frame=CGRectMake(0, 0, _width, _height+20);
+    UILabel* label=[[UILabel alloc]initWithFrame:frame];
+    label.font=[UIFont boldSystemFontOfSize:25];
+    label.numberOfLines=1;
+    label.text=@"+";
+    label.textColor=[UIColor greenColor];
     return label;
 }
 

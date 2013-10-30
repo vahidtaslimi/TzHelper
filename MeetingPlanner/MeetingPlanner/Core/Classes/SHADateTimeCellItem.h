@@ -10,9 +10,9 @@
 #import "SHATimeZone.h"
 
 @interface SHADateTimeCellItem : SHATimeZone
-@property NSString* Value;
-@property int DayDifference;
-@property NSDate* Date;
-@property NSString* Offset;
+@property NSString* value;
+@property int dayDifference;
+@property NSDate* date;
+@property NSString* offset;
 
 @end

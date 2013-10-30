@@ -7,7 +7,6 @@
 //
 
 #import "SHAMainPageViewController.h"
-#import "SHADetailViewController.h"
 #import "SHATzListCell.h"
 #import "SHADateTimeCellItem.h"
 #import "SHALabelGenerator.h"
@@ -217,6 +216,23 @@
     return [_groupHeaderDateFormatter stringFromDate:date];
 }
 
+/*
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    NSDate*  date= [_groupHeadersByDay objectAtIndex:section];
+    NSString *string =[_groupHeaderDateFormatter stringFromDate:date];
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)] ;
+    headerView.backgroundColor=[UIColor blackColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, tableView.frame.size.width, 18)];
+    label.text=string;
+    label.font=[UIFont boldSystemFontOfSize:12];
+    label.textColor=[UIColor redColor];
+    [headerView addSubview:label];
+    return headerView;
+}
+*/
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SHATzListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycell" forIndexPath:indexPath];//[[SHATzListCell alloc]init];
@@ -236,7 +252,7 @@
         NSTimeZone* tz=[_selectedTimezones objectAtIndex:i ];
         [_dateFormatter setTimeZone:tz];
         item=[[SHADateTimeCellItem alloc]init];
-        item.Value=[_dateFormatter stringFromDate:currentSectionDate];
+        item.value=[_dateFormatter stringFromDate:currentSectionDate];
         item.TimeZone=tz;
       
         
@@ -313,7 +329,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSDate *object = _objects[indexPath.row];        
+       // NSDate *object = _objects[indexPath.row];
     }
 }
 

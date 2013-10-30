@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface SHATimeZone : NSObject
-@property NSString* RegionName;
-@property NSString* Name;
-@property NSTimeZone* TimeZone;
+@property NSString* regionName;
+@property NSString* name;
+@property NSTimeZone* timeZone;
 @property int Order;
 @end
