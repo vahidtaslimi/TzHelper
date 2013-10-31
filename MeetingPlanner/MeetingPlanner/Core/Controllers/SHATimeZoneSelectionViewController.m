@@ -55,7 +55,7 @@ NSMutableArray* _searchResult;
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationItem.title=self.selectedTimeZone.name;
-    if(self.selectedTimeZone.timeZone==NULL)
+    if(self.selectedTimeZone.timeZone==NULL || self.selectedTimeZone.Order==0)
     {
         [self.deleteButton setEnabled:false];
     }
@@ -64,6 +64,7 @@ NSMutableArray* _searchResult;
         [self.deleteButton setEnabled:true];
     }
     
+    _searchResult=NULL;
     [super viewWillAppear:animated];
 }
 
@@ -173,6 +174,7 @@ NSMutableArray* _searchResult;
     {
         timeZone= [_searchResult objectAtIndex:indexPath.row];
     }
+    _searchResult=NULL;
     [SHALocalDatabase updateSelectedTimeZonesAtIndex:self.selectedTimeZone.Order withValue:timeZone.timeZone];
     [self.navigationController popViewControllerAnimated:YES];
 }

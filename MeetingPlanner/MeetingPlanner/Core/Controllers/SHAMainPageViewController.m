@@ -28,7 +28,8 @@
     NSString* _currentDateFormatString;
     NSDateFormatter *_dateFormatter;
     NSCalendar *_gregorianCalendar;
-    
+    UIColor* _headerBackgroundColor;
+    UIColor* _headerFontColor;
 }
 
 
@@ -41,7 +42,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
+
     }
     return self;
 }
@@ -49,7 +50,7 @@
 - (void)awakeFromNib
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.preferredContentSize = CGSizeMake(320.0, 600.0);
+       //self.preferredContentSize = CGSizeMake(320.0, 600.0);
     }
     [super awakeFromNib];
 }
@@ -57,12 +58,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-   // self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    
-    //   UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    // self.navigationItem.rightBarButtonItem = addButton;
-    
+    _headerBackgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:96 alpha:1];
+    _headerFontColor=[UIColor colorWithHue:3 saturation:81 brightness:100 alpha:1];
         _gregorianCalendar=[NSCalendar currentCalendar];
      _currentDateFormatString = @"yyyy.MM.dd HH:mm zzz";
     
@@ -78,57 +75,17 @@
     
     _dateFormatter = [[NSDateFormatter alloc] init];
     NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"HH:mm" options:0 locale:[NSLocale currentLocale]];
-    //NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"h:mm a" options:0 locale:[NSLocale currentLocale]];
     [_dateFormatter setDateFormat:dateFormat];
-    //[dateFormatter setDateStyle:NSDateFormatterLongStyle];
-    //[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    
     _selectedDate = [NSDate date];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
 
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-     [self loadTimezones];
-    _groupHeaderDateFormatter.timeZone=[_selectedTimezones objectAtIndex:0];
-    
-    [self loadGroupHeaders];
-    
-    [self addHeaderLabels];
-    [self.tableView reloadData];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:500];
-    [self.tableView scrollToRowAtIndexPath:indexPath
-                          atScrollPosition:UITableViewScrollPositionTop
-                                  animated:YES];
-
+    [self loadAndDisplayTimes];
    [super viewWillAppear:animated];
 }
--(void)addHeaderLabels
-{
-    NSMutableArray* items=[[NSMutableArray alloc]init];
-    SHATimeZone* item;
-    for (int i=0; i<_selectedTimezones.count; i++) {
-        item=[SHATimeZoneHelper Parse:[_selectedTimezones objectAtIndex:i]];
-        [items addObject:item];
-    }
-    
-    [SHALabelGenerator addHeaderLabelsToView:self.timezoneNamesContainer fromTimezones:items buttonPressAction:^(UIButton* button){
-        SHAButton* sender=(SHAButton*)button;
-        if(sender.timeZoneInfo.Order==0)
-        {
-            //return;
-        }
-        
-        [self performSegueWithIdentifier:@"TimeZoneSelectionSegue" sender:sender];
-        
-        
-    }];
-}
 
--(void)handleHeaderTap:(UIButton*)sender
-{
-    
-}
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self.tableView reloadData];
@@ -141,130 +98,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
-{
-    if (!_objects) {
-        _objects = [[NSMutableArray alloc] init];
-    }
-    [_objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
--(void)loadGroupHeaders
-{
-    if(!_groupHeadersByDay)
-    {
-        _groupHeadersByDay=[[NSMutableArray alloc]init];
-    }
-    
-    NSCalendar *gregorianCalendar = [NSCalendar currentCalendar];
-    for (int i=500; i>0; i--) {
-        
-        NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: _selectedDate];
-        [components setDay:components.day-i];
-        [components setHour: 0];
-        [components setMinute: 0];
-        [components setSecond: 0];
-        
-        NSDate *newDate = [gregorianCalendar dateFromComponents: components];
-        [_groupHeadersByDay addObject:newDate];
-    }
-    
-    NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: _selectedDate];
-    [components setDay:components.day];
-    [components setHour: 0];
-    [components setMinute: 0];
-    [components setSecond: 0];
-    
-    NSDate *newDate = [gregorianCalendar dateFromComponents: components];
-    [_groupHeadersByDay addObject:newDate];
-    
-    for (int i=1; i<500; i++) {
-        
-        NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: _selectedDate];
-        [components setDay:components.day+i];
-        [components setHour: 0];
-        [components setMinute: 0];
-        [components setSecond: 0];
-        
-        NSDate *newDate = [gregorianCalendar dateFromComponents: components];
-        [_groupHeadersByDay addObject:newDate];
-    }
-    //[[self dateFormatter]setTimeZone:timezoe];
-}
-
--(void)loadTimezones
-{
-    _selectedTimezones=[SHALocalDatabase loadSelectedTimeZones];
-}
-
-- (void) headerTapped: (UIButton*) sender
-{
-    NSLog(@"Header tapped");
-    [self showPicker];
-}
-
-
-- (void)showPicker
-{
-    if ([self.view viewWithTag:9]) {
-        return;
-    }
-    CGRect toolbarTargetFrame = CGRectMake(0, self.view.bounds.size.height-216-44, 320, 44);
-    CGRect datePickerTargetFrame = CGRectMake(0, self.view.bounds.size.height-216, 320, 216);
-    
-    UIView *darkView = [[UIView alloc] initWithFrame:self.view.bounds] ;
-    darkView.alpha = 0;
-    darkView.backgroundColor = [UIColor blackColor];
-    darkView.tag = 9;
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissDatePicker:)] ;
-    [darkView addGestureRecognizer:tapGesture];
-    [self.view addSubview:darkView];
-    
-    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)] ;
-    datePicker.tag = 10;
-    datePicker.datePickerMode=UIDatePickerModeDate;
-    datePicker.backgroundColor=[UIColor whiteColor];
-    [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:datePicker];
-    
-    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 44)] ;
-    toolBar.tag = 11;
-    toolBar.barStyle = UIBarStyleBlackTranslucent;
-    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] ;
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissDatePicker:)];
-    [toolBar setItems:[NSArray arrayWithObjects:spacer, doneButton, nil]];
-    [self.view addSubview:toolBar];
-    
-    [UIView beginAnimations:@"MoveIn" context:nil];
-    toolBar.frame = toolbarTargetFrame;
-    datePicker.frame = datePickerTargetFrame;
-    darkView.alpha = 0.5;
-    [UIView commitAnimations];
-}
-
-- (void)changeDate:(UIDatePicker *)sender {
-    NSLog(@"New Date: %@", sender.date);
-}
-
-- (void)removeViews:(id)object {
-    [[self.view viewWithTag:9] removeFromSuperview];
-    [[self.view viewWithTag:10] removeFromSuperview];
-    [[self.view viewWithTag:11] removeFromSuperview];
-}
-
-- (void)dismissDatePicker:(id)sender {
-    CGRect toolbarTargetFrame = CGRectMake(0, self.view.bounds.size.height, 320, 44);
-    CGRect datePickerTargetFrame = CGRectMake(0, self.view.bounds.size.height+44, 320, 216);
-    [UIView beginAnimations:@"MoveOut" context:nil];
-    [self.view viewWithTag:9].alpha = 0;
-    [self.view viewWithTag:10].frame = datePickerTargetFrame;
-    [self.view viewWithTag:11].frame = toolbarTargetFrame;
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(removeViews:)];
-    [UIView commitAnimations];
-}
 
 #pragma mark - Table View
 
@@ -291,13 +124,13 @@
     NSString *string =[_groupHeaderDateFormatter stringFromDate:date];
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)] ;
-    headerView.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:96 alpha:1];
+    headerView.backgroundColor=_headerBackgroundColor;
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
     UILabel* label=[[UILabel alloc]initWithFrame:CGRectMake(0, 5, button.frame.size.width,20)];
     label.text=string;
     label.textAlignment=NSTextAlignmentCenter;
     label.font=[UIFont boldSystemFontOfSize:17];
-    label.textColor=[UIColor colorWithHue:3 saturation:81 brightness:100 alpha:1];
+    label.textColor=_headerFontColor;
     [button addSubview:label];
     [button addTarget: self action: @selector(headerTapped:) forControlEvents: UIControlEventTouchUpInside];
     [headerView addSubview:button];
@@ -369,7 +202,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return false;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -382,21 +215,6 @@
     }
 }
 
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -405,6 +223,7 @@
     }
 }
 
+#pragma mark - Seaue Methods
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([[segue identifier] isEqualToString:@"TimeZoneSelectionSegue"])
@@ -413,6 +232,165 @@
         SHAButton* button=(SHAButton*)sender;
         controller.selectedTimeZone=button.timeZoneInfo;
     }
+}
+
+#pragma mark - Private Methods
+-(void) loadAndDisplayTimes
+{
+    [self loadTimezones];
+    _groupHeaderDateFormatter.timeZone=[_selectedTimezones objectAtIndex:0];
+    
+    [self loadGroupHeaders];
+    
+    [self addHeaderLabels];
+    [self.tableView reloadData];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:365];
+    [self.tableView scrollToRowAtIndexPath:indexPath
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:YES];
+}
+-(void)addHeaderLabels
+{
+    NSMutableArray* items=[[NSMutableArray alloc]init];
+    SHATimeZone* item;
+    for (int i=0; i<_selectedTimezones.count; i++) {
+        item=[SHATimeZoneHelper Parse:[_selectedTimezones objectAtIndex:i]];
+        [items addObject:item];
+    }
+    
+    [SHALabelGenerator addHeaderLabelsToView:self.timezoneNamesContainer fromTimezones:items buttonPressAction:^(UIButton* button){
+        SHAButton* sender=(SHAButton*)button;
+        if(sender.timeZoneInfo.Order==0)
+        {
+            //return;
+        }
+        
+        [self performSegueWithIdentifier:@"TimeZoneSelectionSegue" sender:sender];
+        
+        
+    }];
+}
+-(void)loadGroupHeaders
+{
+    _groupHeadersByDay=[[NSMutableArray alloc]init];
+    
+    NSCalendar *gregorianCalendar = [NSCalendar currentCalendar];
+    gregorianCalendar.timeZone=_selectedTimezones[0];
+    NSDateComponents * dateComponents = [gregorianCalendar
+                                         components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
+                                         fromDate:_selectedDate];
+    
+    // Create a date object repersenting the start of today.
+    dateComponents.hour=0;
+    dateComponents.minute=0;
+    dateComponents.hour=0;
+    
+    _selectedDate = [gregorianCalendar dateFromComponents:dateComponents];
+    
+    for (int i=365; i>0; i--) {
+        
+        NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: _selectedDate];
+        [components setDay:components.day-i];
+        [components setHour: 0];
+        [components setMinute: 0];
+        [components setSecond: 0];
+        
+        NSDate *newDate = [gregorianCalendar dateFromComponents: components];
+        [_groupHeadersByDay addObject:newDate];
+    }
+    
+    NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: _selectedDate];
+    [components setDay:components.day];
+    [components setHour: 0];
+    [components setMinute: 0];
+    [components setSecond: 0];
+    
+    NSDate *newDate = [gregorianCalendar dateFromComponents: components];
+    [_groupHeadersByDay addObject:newDate];
+    
+    for (int i=1; i<365; i++) {
+        
+        NSDateComponents *components = [gregorianCalendar components: NSUIntegerMax fromDate: _selectedDate];
+        [components setDay:components.day+i];
+        [components setHour: 0];
+        [components setMinute: 0];
+        [components setSecond: 0];
+        
+        NSDate *newDate = [gregorianCalendar dateFromComponents: components];
+        [_groupHeadersByDay addObject:newDate];
+    }
+}
+
+-(void)loadTimezones
+{
+    _selectedTimezones=[SHALocalDatabase loadSelectedTimeZones];
+}
+
+- (void) headerTapped: (UIButton*) sender
+{
+    [self showPicker];
+}
+
+
+- (void)showPicker
+{
+    if ([self.view viewWithTag:9]) {
+        return;
+    }
+    CGRect toolbarTargetFrame = CGRectMake(0, self.view.bounds.size.height-216-44, self.view.bounds.size.width, 44);
+    CGRect datePickerTargetFrame = CGRectMake(0, self.view.bounds.size.height-216, self.view.bounds.size.width, 216);
+    
+    UIView *darkView = [[UIView alloc] initWithFrame:self.view.bounds] ;
+    darkView.alpha = 0;
+    darkView.backgroundColor=_headerBackgroundColor;
+    darkView.tag = 9;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissDatePicker:)] ;
+    [darkView addGestureRecognizer:tapGesture];
+    [self.view addSubview:darkView];
+    
+    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)] ;
+    datePicker.tag = 10;
+    datePicker.datePickerMode=UIDatePickerModeDate;
+    datePicker.backgroundColor=[UIColor whiteColor];
+    [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:datePicker];
+    
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 44)] ;
+    toolBar.tag = 11;
+    toolBar.barStyle = UIBarStyleDefault;
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] ;
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissDatePicker:)];
+    [toolBar setItems:[NSArray arrayWithObjects:spacer, doneButton, nil]];
+    [self.view addSubview:toolBar];
+    
+    [UIView beginAnimations:@"MoveIn" context:nil];
+    toolBar.frame = toolbarTargetFrame;
+    datePicker.frame = datePickerTargetFrame;
+    darkView.alpha = 0.7;
+    [UIView commitAnimations];
+}
+
+- (void)changeDate:(UIDatePicker *)sender {
+    _selectedDate=sender.date;
+}
+
+- (void)removeViews:(id)object {
+    [[self.view viewWithTag:9] removeFromSuperview];
+    [[self.view viewWithTag:10] removeFromSuperview];
+    [[self.view viewWithTag:11] removeFromSuperview];
+}
+
+- (void)dismissDatePicker:(id)sender {
+    CGRect toolbarTargetFrame = CGRectMake(0, self.view.bounds.size.height, 320, 44);
+    CGRect datePickerTargetFrame = CGRectMake(0, self.view.bounds.size.height+44, 320, 216);
+    [UIView beginAnimations:@"MoveOut" context:nil];
+    [self.view viewWithTag:9].alpha = 0;
+    [self.view viewWithTag:10].frame = datePickerTargetFrame;
+    [self.view viewWithTag:11].frame = toolbarTargetFrame;
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(removeViews:)];
+    [UIView commitAnimations];
+    [self loadAndDisplayTimes];
 }
 
 @end
