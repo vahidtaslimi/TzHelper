@@ -15,18 +15,19 @@ float _firstItemWidth=50;
 float _firstItemLeft=10;
 float _left=10;
 float _top=5;
-float _width=50;
+float _width=70;
 float _dayDiffWidth=20;
 float _dayDiffHeight=15;
 float _height=20;
 float _marginLeft=10;
-int _landscapeCount=9;
-int _portraitCount=5;
+int _landscapeCount=8;
+int _portraitCount=4;
 UIFont* _font;
 UIFont* _dayDiffFont;
 UIFont* _headerFont;
 UIFont* _offsetFont;
 UIFont* _boldFont;
+UIColor* _headerColor;
 
 + (void)initialize
 {
@@ -34,21 +35,23 @@ UIFont* _boldFont;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             _left=10;
             _top=5;
-            _width=60;
+            _width=70;
             _height=30;
-            _landscapeCount=18;
-            _portraitCount=10;
+            _landscapeCount=16;
+            _portraitCount=8;
+
         }
         else
         {
             
         }
-        
-        _font=[UIFont systemFontOfSize:12];
-        _dayDiffFont=[UIFont systemFontOfSize:8];
-        _headerFont=[UIFont systemFontOfSize:10];
-        _offsetFont=[UIFont systemFontOfSize:8];
-        _boldFont=[UIFont boldSystemFontOfSize:14];
+
+                    _headerColor=[UIColor colorWithHue:3 saturation:81 brightness:100 alpha:1];
+        _font=[UIFont systemFontOfSize:17];
+        _dayDiffFont=[UIFont systemFontOfSize:10];
+        _headerFont=[UIFont systemFontOfSize:17];
+        _offsetFont=[UIFont systemFontOfSize:10];
+        _boldFont=[UIFont boldSystemFontOfSize:17];
     }
     
 }
@@ -64,6 +67,7 @@ UIFont* _boldFont;
     item=[timezoneItems objectAtIndex:0];
     UILabel* label=[self addItemLabel:view at:_firstItemLeft text:item.value];
     label.font=_boldFont;
+    label.textColor=_headerColor;
     
     for (int i=1; i<_portraitCount; i++) {
         if([timezoneItems count]<=i)
@@ -236,6 +240,7 @@ UIFont* _boldFont;
         UILabel* offsetLabel=[self getHeaderOffsetLabelWithText:offsetLabelText];
         [button addSubview:offsetLabel];
         [button addSubview:label];
+        label.textColor=_headerColor;
         [view addSubview:button];
 
     }

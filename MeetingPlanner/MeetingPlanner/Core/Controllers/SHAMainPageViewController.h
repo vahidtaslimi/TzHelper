@@ -12,6 +12,7 @@
 @interface SHAMainPageViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 @property (retain, nonatomic)IBOutlet  UITableView *tableView;
 @property (retain, nonatomic) IBOutlet UIView *timezoneNamesContainer;
+@property (retain,nonatomic) IBOutlet UIDatePicker* datePicker;
 
 
 @end

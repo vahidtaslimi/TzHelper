@@ -78,12 +78,14 @@
     
     _dateFormatter = [[NSDateFormatter alloc] init];
     NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"HH:mm" options:0 locale:[NSLocale currentLocale]];
+    //NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"h:mm a" options:0 locale:[NSLocale currentLocale]];
     [_dateFormatter setDateFormat:dateFormat];
     //[dateFormatter setDateStyle:NSDateFormatterLongStyle];
     //[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
     _selectedDate = [NSDate date];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -197,6 +199,72 @@
     _selectedTimezones=[SHALocalDatabase loadSelectedTimeZones];
 }
 
+- (void) headerTapped: (UIButton*) sender
+{
+    NSLog(@"Header tapped");
+    [self showPicker];
+}
+
+
+- (void)showPicker
+{
+    if ([self.view viewWithTag:9]) {
+        return;
+    }
+    CGRect toolbarTargetFrame = CGRectMake(0, self.view.bounds.size.height-216-44, 320, 44);
+    CGRect datePickerTargetFrame = CGRectMake(0, self.view.bounds.size.height-216, 320, 216);
+    
+    UIView *darkView = [[UIView alloc] initWithFrame:self.view.bounds] ;
+    darkView.alpha = 0;
+    darkView.backgroundColor = [UIColor blackColor];
+    darkView.tag = 9;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissDatePicker:)] ;
+    [darkView addGestureRecognizer:tapGesture];
+    [self.view addSubview:darkView];
+    
+    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)] ;
+    datePicker.tag = 10;
+    datePicker.datePickerMode=UIDatePickerModeDate;
+    datePicker.backgroundColor=[UIColor whiteColor];
+    [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:datePicker];
+    
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 44)] ;
+    toolBar.tag = 11;
+    toolBar.barStyle = UIBarStyleBlackTranslucent;
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] ;
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissDatePicker:)];
+    [toolBar setItems:[NSArray arrayWithObjects:spacer, doneButton, nil]];
+    [self.view addSubview:toolBar];
+    
+    [UIView beginAnimations:@"MoveIn" context:nil];
+    toolBar.frame = toolbarTargetFrame;
+    datePicker.frame = datePickerTargetFrame;
+    darkView.alpha = 0.5;
+    [UIView commitAnimations];
+}
+
+- (void)changeDate:(UIDatePicker *)sender {
+    NSLog(@"New Date: %@", sender.date);
+}
+
+- (void)removeViews:(id)object {
+    [[self.view viewWithTag:9] removeFromSuperview];
+    [[self.view viewWithTag:10] removeFromSuperview];
+    [[self.view viewWithTag:11] removeFromSuperview];
+}
+
+- (void)dismissDatePicker:(id)sender {
+    CGRect toolbarTargetFrame = CGRectMake(0, self.view.bounds.size.height, 320, 44);
+    CGRect datePickerTargetFrame = CGRectMake(0, self.view.bounds.size.height+44, 320, 216);
+    [UIView beginAnimations:@"MoveOut" context:nil];
+    [self.view viewWithTag:9].alpha = 0;
+    [self.view viewWithTag:10].frame = datePickerTargetFrame;
+    [self.view viewWithTag:11].frame = toolbarTargetFrame;
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(removeViews:)];
+    [UIView commitAnimations];
+}
 
 #pragma mark - Table View
 
@@ -216,22 +284,26 @@
     return [_groupHeaderDateFormatter stringFromDate:date];
 }
 
-/*
+
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     NSDate*  date= [_groupHeadersByDay objectAtIndex:section];
     NSString *string =[_groupHeaderDateFormatter stringFromDate:date];
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)] ;
-    headerView.backgroundColor=[UIColor blackColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, tableView.frame.size.width, 18)];
+    headerView.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:96 alpha:1];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
+    UILabel* label=[[UILabel alloc]initWithFrame:CGRectMake(0, 5, button.frame.size.width,20)];
     label.text=string;
-    label.font=[UIFont boldSystemFontOfSize:12];
-    label.textColor=[UIColor redColor];
-    [headerView addSubview:label];
+    label.textAlignment=NSTextAlignmentCenter;
+    label.font=[UIFont boldSystemFontOfSize:17];
+    label.textColor=[UIColor colorWithHue:3 saturation:81 brightness:100 alpha:1];
+    [button addSubview:label];
+    [button addTarget: self action: @selector(headerTapped:) forControlEvents: UIControlEventTouchUpInside];
+    [headerView addSubview:button];
     return headerView;
 }
-*/
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
