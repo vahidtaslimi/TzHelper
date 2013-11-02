@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F2A65D7318166829004EB2EE"
                BuildableName = "MeetingPlanner.app"
-               BlueprintName = "MeetingPlanner"
-               ReferencedContainer = "container:MeetingPlanner.xcodeproj">
+               BlueprintName = "Time Zone Helper"
+               ReferencedContainer = "container:Time Zone Helper.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F2A65D9A18166829004EB2EE"
                BuildableName = "MeetingPlannerTests.xctest"
-               BlueprintName = "MeetingPlannerTests"
-               ReferencedContainer = "container:MeetingPlanner.xcodeproj">
+               BlueprintName = "Time Zone HelperTests"
+               ReferencedContainer = "container:Time Zone Helper.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -44,8 +44,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F2A65D7318166829004EB2EE"
             BuildableName = "MeetingPlanner.app"
-            BlueprintName = "MeetingPlanner"
-            ReferencedContainer = "container:MeetingPlanner.xcodeproj">
+            BlueprintName = "Time Zone Helper"
+            ReferencedContainer = "container:Time Zone Helper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -63,8 +63,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F2A65D7318166829004EB2EE"
             BuildableName = "MeetingPlanner.app"
-            BlueprintName = "MeetingPlanner"
-            ReferencedContainer = "container:MeetingPlanner.xcodeproj">
+            BlueprintName = "Time Zone Helper"
+            ReferencedContainer = "container:Time Zone Helper.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -81,8 +81,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F2A65D7318166829004EB2EE"
             BuildableName = "MeetingPlanner.app"
-            BlueprintName = "MeetingPlanner"
-            ReferencedContainer = "container:MeetingPlanner.xcodeproj">
+            BlueprintName = "Time Zone Helper"
+            ReferencedContainer = "container:Time Zone Helper.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

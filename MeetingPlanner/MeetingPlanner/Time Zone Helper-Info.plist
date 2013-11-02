@@ -8,8 +8,35 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>timeZoneHelperIcon58</string>
+				<string>timeZoneHelperIcon80</string>
+				<string>timeZoneHelperIcon120</string>
+			</array>
+		</dict>
+	</dict>
+	<key>CFBundleIcons~ipad</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>timeZoneHelperIcon58</string>
+				<string>timeZoneHelperIcon29</string>
+				<string>timeZoneHelperIcon80</string>
+				<string>timeZoneHelperIcon40</string>
+				<string>timeZoneHelperIcon152</string>
+				<string>timeZoneHelperIcon76</string>
+			</array>
+		</dict>
+	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>me.persianmedia.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>me.pecom.timezoneconverter${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

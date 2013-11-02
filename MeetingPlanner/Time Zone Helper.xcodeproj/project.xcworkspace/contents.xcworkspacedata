@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:MeetingPlanner.xcodeproj">
+      location = "self:Time Zone Helper.xcodeproj">
    </FileRef>
 </Workspace>
