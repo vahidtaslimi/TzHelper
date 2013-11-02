@@ -29,10 +29,10 @@ NSMutableArray* _selectedTimezones;
     {
         _selectedTimezonesNames=[[NSMutableArray alloc]initWithCapacity:10];
         [_selectedTimezonesNames addObject:[NSTimeZone defaultTimeZone].name];
-        [_selectedTimezonesNames addObject:@"Australia/Perth"] ;
-        [_selectedTimezonesNames  addObject:@"Asia/Tehran"] ;
-        [_selectedTimezonesNames addObject:@"Europe/Amsterdam"] ;
-        /* [_selectedTimezonesNames addObject:@"GMT"];
+        [_selectedTimezonesNames addObject:@"Europe/London"] ;
+        [_selectedTimezonesNames  addObject:@"Asia/Tokyo"] ;
+        /* [_selectedTimezonesNames addObject:@"Europe/Amsterdam"] ;
+        [_selectedTimezonesNames addObject:@"GMT"];
          [_selectedTimezonesNames addObject:@"America/Los_Angeles"] ;
          [_selectedTimezonesNames addObject:@"Asia/Damascus"] ;
          [_selectedTimezonesNames addObject:@"Asia/Phnom_Penh"] ;

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7778035A182550B800457026 /* timeZoneHelperAppstorIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77780356182550B800457026 /* timeZoneHelperAppstorIcon.jpg */; };
+		7778035B182550B800457026 /* timeZoneHelperIcon60.png in Resources */ = {isa = PBXBuildFile; fileRef = 77780357182550B800457026 /* timeZoneHelperIcon60.png */; };
+		777803621825521500457026 /* Launch 640x960.png in Resources */ = {isa = PBXBuildFile; fileRef = 7778035C1825521500457026 /* Launch 640x960.png */; };
+		777803631825521500457026 /* Launch 640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 7778035D1825521500457026 /* Launch 640x1136.png */; };
+		777803641825521500457026 /* Launch 768x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 7778035E1825521500457026 /* Launch 768x1024.png */; };
+		777803651825521500457026 /* Launch 768x1024@2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7778035F1825521500457026 /* Launch 768x1024@2.png */; };
+		777803661825521500457026 /* Launch 1024x768.png in Resources */ = {isa = PBXBuildFile; fileRef = 777803601825521500457026 /* Launch 1024x768.png */; };
+		777803671825521500457026 /* Launch 1024x768@2.png in Resources */ = {isa = PBXBuildFile; fileRef = 777803611825521500457026 /* Launch 1024x768@2.png */; };
 		7786CEE0182524A6000BF4E8 /* timeZoneHelperAppstorIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786CED5182524A6000BF4E8 /* timeZoneHelperAppstorIcon.png */; };
 		7786CEE1182524A6000BF4E8 /* timeZoneHelperIcon100.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786CED6182524A6000BF4E8 /* timeZoneHelperIcon100.png */; };
 		7786CEE2182524A6000BF4E8 /* timeZoneHelperIcon144.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786CED7182524A6000BF4E8 /* timeZoneHelperIcon144.png */; };
@@ -57,6 +65,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		77780356182550B800457026 /* timeZoneHelperAppstorIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = timeZoneHelperAppstorIcon.jpg; sourceTree = "<group>"; };
+		77780357182550B800457026 /* timeZoneHelperIcon60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeZoneHelperIcon60.png; sourceTree = "<group>"; };
+		7778035C1825521500457026 /* Launch 640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch 640x960.png"; sourceTree = "<group>"; };
+		7778035D1825521500457026 /* Launch 640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch 640x1136.png"; sourceTree = "<group>"; };
+		7778035E1825521500457026 /* Launch 768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch 768x1024.png"; sourceTree = "<group>"; };
+		7778035F1825521500457026 /* Launch 768x1024@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch 768x1024@2.png"; sourceTree = "<group>"; };
+		777803601825521500457026 /* Launch 1024x768.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch 1024x768.png"; sourceTree = "<group>"; };
+		777803611825521500457026 /* Launch 1024x768@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch 1024x768@2.png"; sourceTree = "<group>"; };
 		7786CED5182524A6000BF4E8 /* timeZoneHelperAppstorIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeZoneHelperAppstorIcon.png; sourceTree = "<group>"; };
 		7786CED6182524A6000BF4E8 /* timeZoneHelperIcon100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeZoneHelperIcon100.png; sourceTree = "<group>"; };
 		7786CED7182524A6000BF4E8 /* timeZoneHelperIcon144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeZoneHelperIcon144.png; sourceTree = "<group>"; };
@@ -93,15 +109,15 @@
 		F2A65D7718166829004EB2EE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F2A65D7918166829004EB2EE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F2A65D7B18166829004EB2EE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		F2A65D7F18166829004EB2EE /* Time Zone Helper-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Time Zone Helper-Info.plist"; sourceTree = "<group>"; };
+		F2A65D7F18166829004EB2EE /* timezonehelper-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "timezonehelper-Info.plist"; sourceTree = "<group>"; };
 		F2A65D8118166829004EB2EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F2A65D8318166829004EB2EE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		F2A65D8518166829004EB2EE /* Time Zone Helper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Time Zone Helper-Prefix.pch"; sourceTree = "<group>"; };
+		F2A65D8518166829004EB2EE /* timezonehelper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "timezonehelper-Prefix.pch"; sourceTree = "<group>"; };
 		F2A65D8618166829004EB2EE /* SHAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHAAppDelegate.h; sourceTree = "<group>"; };
 		F2A65D8718166829004EB2EE /* SHAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHAAppDelegate.m; sourceTree = "<group>"; };
 		F2A65D8A18166829004EB2EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		F2A65D8D18166829004EB2EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		F2A65D9B18166829004EB2EE /* Time Zone HelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Time Zone HelperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2A65D9B18166829004EB2EE /* timezonehelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = timezonehelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A65D9C18166829004EB2EE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		F2A65DA418166829004EB2EE /* MeetingPlannerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MeetingPlannerTests-Info.plist"; sourceTree = "<group>"; };
 		F2A65DA618166829004EB2EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -139,15 +155,23 @@
 		7786CED4182524A6000BF4E8 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				7786CEEB182528F8000BF4E8 /* timeZoneHelperIcon120.png */,
+				7778035C1825521500457026 /* Launch 640x960.png */,
+				7778035D1825521500457026 /* Launch 640x1136.png */,
+				7778035E1825521500457026 /* Launch 768x1024.png */,
+				7778035F1825521500457026 /* Launch 768x1024@2.png */,
+				777803601825521500457026 /* Launch 1024x768.png */,
+				777803611825521500457026 /* Launch 1024x768@2.png */,
+				77780356182550B800457026 /* timeZoneHelperAppstorIcon.jpg */,
 				7786CED5182524A6000BF4E8 /* timeZoneHelperAppstorIcon.png */,
 				7786CED6182524A6000BF4E8 /* timeZoneHelperIcon100.png */,
+				7786CEEB182528F8000BF4E8 /* timeZoneHelperIcon120.png */,
 				7786CED7182524A6000BF4E8 /* timeZoneHelperIcon144.png */,
 				7786CED8182524A6000BF4E8 /* timeZoneHelperIcon152.png */,
 				7786CED9182524A6000BF4E8 /* timeZoneHelperIcon29.png */,
 				7786CEDA182524A6000BF4E8 /* timeZoneHelperIcon40.png */,
 				7786CEDB182524A6000BF4E8 /* timeZoneHelperIcon50.png */,
 				7786CEDC182524A6000BF4E8 /* timeZoneHelperIcon58.png */,
+				77780357182550B800457026 /* timeZoneHelperIcon60.png */,
 				7786CEDD182524A6000BF4E8 /* timeZoneHelperIcon72.png */,
 				7786CEDE182524A6000BF4E8 /* timeZoneHelperIcon76.png */,
 				7786CEDF182524A6000BF4E8 /* timeZoneHelperIcon80.png */,
@@ -180,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				F2A65D7418166829004EB2EE /* Time Zone Helper.app */,
-				F2A65D9B18166829004EB2EE /* Time Zone HelperTests.xctest */,
+				F2A65D9B18166829004EB2EE /* timezonehelperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,10 +237,10 @@
 			isa = PBXGroup;
 			children = (
 				7786CED4182524A6000BF4E8 /* Icons */,
-				F2A65D7F18166829004EB2EE /* Time Zone Helper-Info.plist */,
+				F2A65D7F18166829004EB2EE /* timezonehelper-Info.plist */,
 				F2A65D8018166829004EB2EE /* InfoPlist.strings */,
 				F2A65D8318166829004EB2EE /* main.m */,
-				F2A65D8518166829004EB2EE /* Time Zone Helper-Prefix.pch */,
+				F2A65D8518166829004EB2EE /* timezonehelper-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -286,9 +310,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F2A65D7318166829004EB2EE /* Time Zone Helper */ = {
+		F2A65D7318166829004EB2EE /* timezonehelper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F2A65DAC18166829004EB2EE /* Build configuration list for PBXNativeTarget "Time Zone Helper" */;
+			buildConfigurationList = F2A65DAC18166829004EB2EE /* Build configuration list for PBXNativeTarget "timezonehelper" */;
 			buildPhases = (
 				F2A65D7018166829004EB2EE /* Sources */,
 				F2A65D7118166829004EB2EE /* Frameworks */,
@@ -298,14 +322,14 @@
 			);
 			dependencies = (
 			);
-			name = "Time Zone Helper";
+			name = timezonehelper;
 			productName = MeetingPlanner;
 			productReference = F2A65D7418166829004EB2EE /* Time Zone Helper.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F2A65D9A18166829004EB2EE /* Time Zone HelperTests */ = {
+		F2A65D9A18166829004EB2EE /* timezonehelperTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F2A65DAF18166829004EB2EE /* Build configuration list for PBXNativeTarget "Time Zone HelperTests" */;
+			buildConfigurationList = F2A65DAF18166829004EB2EE /* Build configuration list for PBXNativeTarget "timezonehelperTests" */;
 			buildPhases = (
 				F2A65D9718166829004EB2EE /* Sources */,
 				F2A65D9818166829004EB2EE /* Frameworks */,
@@ -316,9 +340,9 @@
 			dependencies = (
 				F2A65DA118166829004EB2EE /* PBXTargetDependency */,
 			);
-			name = "Time Zone HelperTests";
+			name = timezonehelperTests;
 			productName = MeetingPlannerTests;
-			productReference = F2A65D9B18166829004EB2EE /* Time Zone HelperTests.xctest */;
+			productReference = F2A65D9B18166829004EB2EE /* timezonehelperTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -339,7 +363,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F2A65D6F18166829004EB2EE /* Build configuration list for PBXProject "Time Zone Helper" */;
+			buildConfigurationList = F2A65D6F18166829004EB2EE /* Build configuration list for PBXProject "timezonehelper" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -352,8 +376,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F2A65D7318166829004EB2EE /* Time Zone Helper */,
-				F2A65D9A18166829004EB2EE /* Time Zone HelperTests */,
+				F2A65D7318166829004EB2EE /* timezonehelper */,
+				F2A65D9A18166829004EB2EE /* timezonehelperTests */,
 			);
 		};
 /* End PBXProject section */
@@ -364,18 +388,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				7786CEE9182524A6000BF4E8 /* timeZoneHelperIcon76.png in Resources */,
+				777803641825521500457026 /* Launch 768x1024.png in Resources */,
 				7786CEE3182524A6000BF4E8 /* timeZoneHelperIcon152.png in Resources */,
+				7778035B182550B800457026 /* timeZoneHelperIcon60.png in Resources */,
 				7786CEEA182524A6000BF4E8 /* timeZoneHelperIcon80.png in Resources */,
 				7786CEEC182528F8000BF4E8 /* timeZoneHelperIcon120.png in Resources */,
 				7786CEE0182524A6000BF4E8 /* timeZoneHelperAppstorIcon.png in Resources */,
+				777803651825521500457026 /* Launch 768x1024@2.png in Resources */,
 				7786CEE6182524A6000BF4E8 /* timeZoneHelperIcon50.png in Resources */,
+				777803631825521500457026 /* Launch 640x1136.png in Resources */,
 				7786CEE8182524A6000BF4E8 /* timeZoneHelperIcon72.png in Resources */,
 				7786CEE4182524A6000BF4E8 /* timeZoneHelperIcon29.png in Resources */,
+				777803671825521500457026 /* Launch 1024x768@2.png in Resources */,
 				7786CEE1182524A6000BF4E8 /* timeZoneHelperIcon100.png in Resources */,
 				F2A65D8E18166829004EB2EE /* Main_iPad.storyboard in Resources */,
 				F2A65D8B18166829004EB2EE /* Main_iPhone.storyboard in Resources */,
+				777803661825521500457026 /* Launch 1024x768.png in Resources */,
 				7786CEE7182524A6000BF4E8 /* timeZoneHelperIcon58.png in Resources */,
+				7778035A182550B800457026 /* timeZoneHelperAppstorIcon.jpg in Resources */,
 				7786CEE5182524A6000BF4E8 /* timeZoneHelperIcon40.png in Resources */,
+				777803621825521500457026 /* Launch 640x960.png in Resources */,
 				F2A65D8218166829004EB2EE /* InfoPlist.strings in Resources */,
 				7786CEE2182524A6000BF4E8 /* timeZoneHelperIcon144.png in Resources */,
 			);
@@ -426,7 +458,7 @@
 /* Begin PBXTargetDependency section */
 		F2A65DA118166829004EB2EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F2A65D7318166829004EB2EE /* Time Zone Helper */;
+			target = F2A65D7318166829004EB2EE /* timezonehelper */;
 			targetProxy = F2A65DA018166829004EB2EE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -547,11 +579,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MeetingPlanner/Time Zone Helper-Prefix.pch";
-				INFOPLIST_FILE = "MeetingPlanner/Time Zone Helper-Info.plist";
+				GCC_PREFIX_HEADER = "MeetingPlanner/timezonehelper-Prefix.pch";
+				INFOPLIST_FILE = "MeetingPlanner/timezonehelper-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Time Zone Helper";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "E50A1145-476D-43F0-B62B-596660DC1E38";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -559,14 +591,14 @@
 		F2A65DAE18166829004EB2EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shaghayegh Moshtarikhah (D9AX649GWZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MeetingPlanner/Time Zone Helper-Prefix.pch";
-				INFOPLIST_FILE = "MeetingPlanner/Time Zone Helper-Info.plist";
+				GCC_PREFIX_HEADER = "MeetingPlanner/timezonehelper-Prefix.pch";
+				INFOPLIST_FILE = "MeetingPlanner/timezonehelper-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Time Zone Helper";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "E50A1145-476D-43F0-B62B-596660DC1E38";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -588,7 +620,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "MeetingPlannerTests/MeetingPlannerTests-Info.plist";
-				PRODUCT_NAME = "Time Zone HelperTests";
+				PRODUCT_NAME = timezonehelperTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -607,7 +639,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MeetingPlanner/MeetingPlanner-Prefix.pch";
 				INFOPLIST_FILE = "MeetingPlannerTests/MeetingPlannerTests-Info.plist";
-				PRODUCT_NAME = "Time Zone HelperTests";
+				PRODUCT_NAME = timezonehelperTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -616,7 +648,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F2A65D6F18166829004EB2EE /* Build configuration list for PBXProject "Time Zone Helper" */ = {
+		F2A65D6F18166829004EB2EE /* Build configuration list for PBXProject "timezonehelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2A65DAA18166829004EB2EE /* Debug */,
@@ -625,7 +657,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F2A65DAC18166829004EB2EE /* Build configuration list for PBXNativeTarget "Time Zone Helper" */ = {
+		F2A65DAC18166829004EB2EE /* Build configuration list for PBXNativeTarget "timezonehelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2A65DAD18166829004EB2EE /* Debug */,
@@ -634,7 +666,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F2A65DAF18166829004EB2EE /* Build configuration list for PBXNativeTarget "Time Zone HelperTests" */ = {
+		F2A65DAF18166829004EB2EE /* Build configuration list for PBXNativeTarget "timezonehelperTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2A65DB018166829004EB2EE /* Debug */,

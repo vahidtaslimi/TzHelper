@@ -31,6 +31,8 @@
         item.Name = [NSString stringWithFormat:@"%@ (%@)", [components objectAtIndex:2], [components objectAtIndex:1]];
     }
     
+    item.name= [item.name stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+    
     item.TimeZone=timeZone;
     
     if([item isKindOfClass:[SHADateTimeCellItem class]])

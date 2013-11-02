@@ -246,7 +246,11 @@
     
     [self addHeaderLabels];
     [self.tableView reloadData];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:365];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    calendar.timeZone=[_selectedTimezones objectAtIndex:0];
+    NSDateComponents *components = [calendar components:NSHourCalendarUnit fromDate:_selectedDate];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:components.hour inSection:365];
     [self.tableView scrollToRowAtIndexPath:indexPath
                           atScrollPosition:UITableViewScrollPositionTop
                                   animated:YES];

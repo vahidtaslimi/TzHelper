@@ -46,7 +46,7 @@ UIColor* _headerColor;
             
         }
 
-                    _headerColor=[UIColor colorWithHue:3 saturation:81 brightness:100 alpha:1];
+        _headerColor=[UIColor colorWithHue:3 saturation:81 brightness:100 alpha:1];
         _font=[UIFont systemFontOfSize:17];
         _dayDiffFont=[UIFont systemFontOfSize:10];
         _headerFont=[UIFont systemFontOfSize:17];
@@ -138,7 +138,7 @@ UIColor* _headerColor;
         UILabel* labelPlusOne=[[UILabel alloc]init];
         CGRect frame;
         frame=CGRectMake(left+20, top, _dayDiffWidth, _dayDiffHeight);
-        labelPlusOne.textColor=[UIColor blueColor];
+        labelPlusOne.textColor=[UIColor colorWithRed:0 green:122/255 blue:255/255 alpha:1];
         
         labelPlusOne.tag=left+top+20;
         labelPlusOne.frame=frame;
