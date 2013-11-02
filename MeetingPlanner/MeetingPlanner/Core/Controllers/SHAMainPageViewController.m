@@ -58,7 +58,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _headerBackgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:96 alpha:1];
+    _headerBackgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0.97 alpha:1];
     _headerFontColor=[UIColor colorWithHue:3 saturation:81 brightness:100 alpha:1];
         _gregorianCalendar=[NSCalendar currentCalendar];
      _currentDateFormatString = @"yyyy.MM.dd HH:mm zzz";
@@ -78,8 +78,10 @@
     [_dateFormatter setDateFormat:dateFormat];
     _selectedDate = [NSDate date];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TzItemCell"];
-
+    self.timezoneNamesContainer.backgroundColor=_headerBackgroundColor;
+    self.view.backgroundColor=_headerBackgroundColor;
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [self loadAndDisplayTimes];
@@ -129,7 +131,7 @@
     UILabel* label=[[UILabel alloc]initWithFrame:CGRectMake(0, 5, button.frame.size.width,20)];
     label.text=string;
     label.textAlignment=NSTextAlignmentCenter;
-    label.font=[UIFont boldSystemFontOfSize:17];
+    label.font=[UIFont systemFontOfSize:17];
     label.textColor=_headerFontColor;
     [button addSubview:label];
     [button addTarget: self action: @selector(headerTapped:) forControlEvents: UIControlEventTouchUpInside];

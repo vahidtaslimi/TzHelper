@@ -66,7 +66,7 @@ UIColor* _headerColor;
     SHADateTimeCellItem* item;
     item=[timezoneItems objectAtIndex:0];
     UILabel* label=[self addItemLabel:view at:_firstItemLeft text:item.value];
-    label.font=_boldFont;
+    //label.font=_boldFont;
     label.textColor=_headerColor;
     
     for (int i=1; i<_portraitCount; i++) {
@@ -233,14 +233,16 @@ UIColor* _headerColor;
         labelText=timezone.name;
         offsetLabelText=timezone.timeZone.abbreviation;
         UILabel* label=[self getHeaderLabelWithText:labelText];
+        UILabel* offsetLabel=[self getHeaderOffsetLabelWithText:offsetLabelText];
         if(order==0)
         {
-            label.font=_boldFont;
+            offsetLabel.textColor=_headerColor;
+            label.textColor=_headerColor;
+            //label.font=_boldFont;
         }
-        UILabel* offsetLabel=[self getHeaderOffsetLabelWithText:offsetLabelText];
         [button addSubview:offsetLabel];
         [button addSubview:label];
-        label.textColor=_headerColor;
+        //label.textColor=_headerColor;
         [view addSubview:button];
 
     }

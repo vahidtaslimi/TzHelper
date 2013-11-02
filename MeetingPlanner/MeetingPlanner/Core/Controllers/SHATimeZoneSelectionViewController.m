@@ -206,6 +206,15 @@ NSMutableArray* _searchResult;
         {
             [_searchResult addObject:tz];
         }
+        else
+        {
+            range = [tz.timeZone.abbreviation rangeOfString:searchText
+                                            options:NSCaseInsensitiveSearch];
+            if (range.location != NSNotFound)
+            {
+                [_searchResult addObject:tz];
+            }
+        }
     }
     
     //[self configureSectionsForTimeZoneArray:tmpSearched];
