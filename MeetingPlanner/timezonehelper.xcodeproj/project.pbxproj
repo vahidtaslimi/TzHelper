@@ -27,6 +27,7 @@
 		7786CEE9182524A6000BF4E8 /* timeZoneHelperIcon76.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786CEDE182524A6000BF4E8 /* timeZoneHelperIcon76.png */; };
 		7786CEEA182524A6000BF4E8 /* timeZoneHelperIcon80.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786CEDF182524A6000BF4E8 /* timeZoneHelperIcon80.png */; };
 		7786CEEC182528F8000BF4E8 /* timeZoneHelperIcon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786CEEB182528F8000BF4E8 /* timeZoneHelperIcon120.png */; };
+		77F20267182FB4AC00E9DB1B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F20266182FB4AC00E9DB1B /* Crashlytics.framework */; };
 		F259056B181929EE00787567 /* SHATimeZoneHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056A181929EE00787567 /* SHATimeZoneHelper.m */; };
 		F259057018192A4A00787567 /* SHARegion.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056D18192A4A00787567 /* SHARegion.m */; };
 		F259057118192A4A00787567 /* SHATimeZoneWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056F18192A4A00787567 /* SHATimeZoneWrapper.m */; };
@@ -85,6 +86,7 @@
 		7786CEDE182524A6000BF4E8 /* timeZoneHelperIcon76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeZoneHelperIcon76.png; sourceTree = "<group>"; };
 		7786CEDF182524A6000BF4E8 /* timeZoneHelperIcon80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeZoneHelperIcon80.png; sourceTree = "<group>"; };
 		7786CEEB182528F8000BF4E8 /* timeZoneHelperIcon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeZoneHelperIcon120.png; sourceTree = "<group>"; };
+		77F20266182FB4AC00E9DB1B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		F2590569181929EE00787567 /* SHATimeZoneHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHATimeZoneHelper.h; sourceTree = "<group>"; };
 		F259056A181929EE00787567 /* SHATimeZoneHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHATimeZoneHelper.m; sourceTree = "<group>"; };
 		F259056C18192A4A00787567 /* SHARegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHARegion.h; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			files = (
 				F2A65D7A18166829004EB2EE /* CoreGraphics.framework in Frameworks */,
 				F2A65D7C18166829004EB2EE /* UIKit.framework in Frameworks */,
+				77F20267182FB4AC00E9DB1B /* Crashlytics.framework in Frameworks */,
 				F2A65D7818166829004EB2EE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +215,7 @@
 		F2A65D7618166829004EB2EE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77F20266182FB4AC00E9DB1B /* Crashlytics.framework */,
 				F2A65D7718166829004EB2EE /* Foundation.framework */,
 				F2A65D7918166829004EB2EE /* CoreGraphics.framework */,
 				F2A65D7B18166829004EB2EE /* UIKit.framework */,
@@ -317,6 +321,7 @@
 				F2A65D7018166829004EB2EE /* Sources */,
 				F2A65D7118166829004EB2EE /* Frameworks */,
 				F2A65D7218166829004EB2EE /* Resources */,
+				77F20265182FB46000E9DB1B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -422,6 +427,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		77F20265182FB46000E9DB1B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 6d77897a4291d8654a376118358be7001f76fcca";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F2A65D7018166829004EB2EE /* Sources */ = {
@@ -578,6 +599,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/vt/GitHubRepo/TzHelper/MeetingPlanner,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MeetingPlanner/timezonehelper-Prefix.pch";
 				INFOPLIST_FILE = "MeetingPlanner/timezonehelper-Info.plist";
@@ -593,6 +618,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shaghayegh Moshtarikhah (D9AX649GWZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/vt/GitHubRepo/TzHelper/MeetingPlanner,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MeetingPlanner/timezonehelper-Prefix.pch";
 				INFOPLIST_FILE = "MeetingPlanner/timezonehelper-Info.plist";

@@ -7,11 +7,13 @@
 //
 
 #import "SHAAppDelegate.h"
+#import <Crashlytics/Crashlytics.h>
 
 @implementation SHAAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Crashlytics startWithAPIKey:@"6d77897a4291d8654a376118358be7001f76fcca"];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
        // UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
