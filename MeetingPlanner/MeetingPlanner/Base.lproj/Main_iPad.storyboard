@@ -58,7 +58,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Time Zone Convertor" id="QG4-3v-Ra6"/>
+                    <navigationItem key="navigationItem" title="Time Zone Convertor" id="QG4-3v-Ra6">
+                        <barButtonItem key="rightBarButtonItem" title="today" id="fdZ-yr-Ch5">
+                            <connections>
+                                <action selector="todayButton:" destination="cgo-qY-ceE" id="Nqd-dk-BFf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="tableView" destination="8Ws-Bu-wDz" id="hmO-lf-m39"/>

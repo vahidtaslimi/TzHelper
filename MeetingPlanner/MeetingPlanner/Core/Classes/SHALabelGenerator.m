@@ -19,7 +19,7 @@ float _width=70;
 float _dayDiffWidth=20;
 float _dayDiffHeight=15;
 float _height=20;
-float _marginLeft=10;
+float _marginLeft=5;
 int _landscapeCount=8;
 int _portraitCount=4;
 UIFont* _font;
@@ -28,6 +28,7 @@ UIFont* _headerFont;
 UIFont* _offsetFont;
 UIFont* _boldFont;
 UIColor* _headerColor;
+float _screenWidth=320;
 
 + (void)initialize
 {
@@ -37,15 +38,15 @@ UIColor* _headerColor;
             _top=5;
             _width=70;
             _height=30;
-            _landscapeCount=16;
-            _portraitCount=8;
-
+            _landscapeCount=15;
+            _portraitCount=7;
+            
         }
         else
         {
             
         }
-
+        
         _headerColor=[UIColor colorWithHue:3 saturation:81 brightness:100 alpha:1];
         _font=[UIFont systemFontOfSize:17];
         _dayDiffFont=[UIFont systemFontOfSize:10];
@@ -75,6 +76,7 @@ UIColor* _headerColor;
         
         item=[timezoneItems objectAtIndex:i];
         float labelLeft= _left+(i*(_width+_marginLeft));
+        NSLog(@"Left is: %f \tWidth is: %f",labelLeft, _width);
         [self addItemLabel:view at:labelLeft text:item.value];
         [self addItemDayDiffLabel:view at:labelLeft text:item.dayDifference];
     }
@@ -179,6 +181,9 @@ UIColor* _headerColor;
     }
     SHATimeZone* item;
     item=[timezoneItems objectAtIndex:0];
+    _firstItemWidth=[self getHeaderLabelWidthForCollection:timezoneItems inViews:view];
+    _width=_firstItemWidth;
+    
     CGRect frame=CGRectMake(_firstItemLeft, _top, _firstItemWidth, view.frame.size.height);
     
     //label.font=[UIFont boldSystemFontOfSize:10];
@@ -244,7 +249,7 @@ UIColor* _headerColor;
         [button addSubview:label];
         //label.textColor=_headerColor;
         [view addSubview:button];
-
+        
     }
     else
     {
@@ -252,7 +257,7 @@ UIColor* _headerColor;
         [button addSubview:label];
         [view addSubview:button];
     }
-
+    
     return button;
 }
 
@@ -290,4 +295,42 @@ UIColor* _headerColor;
     return label;
 }
 
++(float)getHeaderLabelWidthForCollection:(NSMutableArray*)items inViews:(UIView*)view
+{
+    CGFloat width = CGRectGetWidth(view.bounds);
+    long maxItemCount=0;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+        {
+            width=1024;
+            maxItemCount=_landscapeCount;
+        }
+        else
+        {
+            width=758;
+            maxItemCount=_portraitCount;
+        }
+    }
+    else
+    {
+        if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+        {
+            width=568;
+            maxItemCount=_landscapeCount;
+        }
+        else
+        {
+            width=310;
+            maxItemCount=_portraitCount;
+        }
+    }
+    
+    if(items.count < maxItemCount)
+    {
+        maxItemCount= items.count +1;
+    }
+    
+    width=width/(maxItemCount);
+    return width;
+}
 @end

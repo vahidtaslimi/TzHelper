@@ -14,5 +14,6 @@
 @property (retain, nonatomic) IBOutlet UIView *timezoneNamesContainer;
 @property (retain,nonatomic) IBOutlet UIDatePicker* datePicker;
 
+- (IBAction)todayButton:(id)sender;
 
 @end

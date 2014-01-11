@@ -399,4 +399,8 @@
     [self loadAndDisplayTimes];
 }
 
+- (IBAction)todayButton:(id)sender {
+    _selectedDate = [NSDate date];
+       [self loadAndDisplayTimes];
+}
 @end

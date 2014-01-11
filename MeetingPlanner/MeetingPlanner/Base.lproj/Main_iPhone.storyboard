@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="rS3-R9-Ivy">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -131,7 +131,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Time Zone Converter" id="yZe-1M-ynW"/>
+                    <navigationItem key="navigationItem" title="Time Zone Converter" id="yZe-1M-ynW">
+                        <barButtonItem key="rightBarButtonItem" title="today" id="eaV-LN-a5c">
+                            <connections>
+                                <action selector="todayButton:" destination="8mF-w8-3Mj" id="nRj-Iy-OLg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="5aj-6c-OBi" id="Na7-Q2-0x8"/>
                         <outlet property="timezoneNamesContainer" destination="jPw-1F-811" id="QvG-kd-YlX"/>

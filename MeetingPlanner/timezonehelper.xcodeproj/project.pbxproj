@@ -608,7 +608,7 @@
 				INFOPLIST_FILE = "MeetingPlanner/timezonehelper-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Time Zone Helper";
-				PROVISIONING_PROFILE = "E50A1145-476D-43F0-B62B-596660DC1E38";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -616,7 +616,7 @@
 		F2A65DAE18166829004EB2EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shaghayegh Moshtarikhah (D9AX649GWZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -627,7 +627,7 @@
 				INFOPLIST_FILE = "MeetingPlanner/timezonehelper-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Time Zone Helper";
-				PROVISIONING_PROFILE = "E50A1145-476D-43F0-B62B-596660DC1E38";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
