@@ -89,6 +89,7 @@ float _screenWidth=320;
             
             item=[timezoneItems objectAtIndex:i];
             float labelLeft= _left+(i*(_width+_marginLeft));
+                  NSLog(@"Left is: %f \tWidth is: %f",labelLeft, _width);
             [self addItemLabel:view at:labelLeft text:item.value];
             [self addItemDayDiffLabel:view at:labelLeft text:item.dayDifference];
         }
@@ -99,13 +100,14 @@ float _screenWidth=320;
 +(UILabel*)addItemLabel:(UIView*)view at:(float)left text:(NSString*)text
 {
     float rotation=0;//M_PI/2;
-    UILabel* label=(UILabel*)[view viewWithTag:left+_top];
+    float tag=(NSInteger)((left+_top)*1000000);
+    UILabel* label=(UILabel*)[view viewWithTag:tag];
     if(label==NULL)
     {
         
         CGRect frame=CGRectMake(left, _top, _width, _height);
         label=[[UILabel alloc]initWithFrame:frame];
-        label.tag=left+_top;
+        label.tag= tag;
         label.font=_font;
         label.lineBreakMode=NSLineBreakByTruncatingTail;
         label.numberOfLines=1;
@@ -118,8 +120,10 @@ float _screenWidth=320;
 +(void)addItemDayDiffLabel:(UIView*)view at:(float)left text:(int)dayDiff
 {
     int top=_top+_height;
-    UILabel* label=(UILabel*)[view viewWithTag:left+top];
-    UILabel* labelPlusOne=(UILabel*)[view viewWithTag:left+top+20];
+    float tag=(left+top)*1000;
+        float plusOneTag=(left+top+20)*1000;
+    UILabel* label=(UILabel*)[view viewWithTag:tag];
+    UILabel* labelPlusOne=(UILabel*)[view viewWithTag:plusOneTag];
     if(label==NULL)
     {
         NSLog(@"Crating a new label");
@@ -128,7 +132,7 @@ float _screenWidth=320;
         frame=CGRectMake(left, top, _dayDiffWidth, _dayDiffHeight);
         label.textColor=[UIColor redColor];
         
-        label.tag=left+top;
+        label.tag=tag;
         label.frame=frame;
         label.font=_dayDiffFont;
         label.lineBreakMode=NSLineBreakByTruncatingTail;
@@ -142,7 +146,7 @@ float _screenWidth=320;
         frame=CGRectMake(left+20, top, _dayDiffWidth, _dayDiffHeight);
         labelPlusOne.textColor=[UIColor colorWithRed:0 green:122/255 blue:255/255 alpha:1];
         
-        labelPlusOne.tag=left+top+20;
+        labelPlusOne.tag=plusOneTag;
         labelPlusOne.frame=frame;
         labelPlusOne.font=_dayDiffFont;
         labelPlusOne.lineBreakMode=NSLineBreakByTruncatingTail;
