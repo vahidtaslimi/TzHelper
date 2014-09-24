@@ -13,4 +13,5 @@
 @property NSString* name;
 @property NSTimeZone* timeZone;
 @property int Order;
+@property NSString* cityName;
 @end

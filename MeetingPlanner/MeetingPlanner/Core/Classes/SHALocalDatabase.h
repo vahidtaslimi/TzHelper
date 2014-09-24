@@ -10,6 +10,6 @@
 
 @interface SHALocalDatabase : NSObject
 +(NSMutableArray*)loadSelectedTimeZones;
-+(void)updateSelectedTimeZonesAtIndex:(int)index withValue:(NSTimeZone*)timeZone;
++(void)updateSelectedTimeZonesAtIndex:(int)index withValue:(NSString*)timeZone;
 
 @end

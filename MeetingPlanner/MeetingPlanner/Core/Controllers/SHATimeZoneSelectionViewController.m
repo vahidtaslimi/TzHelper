@@ -4,12 +4,13 @@
 //
 //  Created by VT on 26/10/13.
 //  Copyright (c) 2013 Shaghayegh. All rights reserved.
-//
+// #import "SHATimeZoneWrapper.h"
+
 
 #import "SHATimeZoneSelectionViewController.h"
-#import "SHATimeZoneWrapper.h"
 #import "SHATimeZoneSeletctionCell.h"
 #import "SHALocalDatabase.h"
+#import "SHACity.h"
 
 @interface SHATimeZoneSelectionViewController ()
 
@@ -19,11 +20,11 @@
 @implementation SHATimeZoneSelectionViewController
 NSMutableArray* _searchResult;
 
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -31,19 +32,9 @@ NSMutableArray* _searchResult;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
-	NSMutableArray *timeZones = [[NSMutableArray alloc] initWithCapacity:[timeZoneNames count]];
-    
-	for (NSString *timeZoneName in timeZoneNames) {
-        
-		NSArray *nameComponents = [timeZoneName componentsSeparatedByString:@"/"];
-		// For this example, the time zone itself isn't needed.
-		SHATimeZoneWrapper *timeZoneWrapper = [[SHATimeZoneWrapper alloc] initWithTimeZone:nil nameComponents:nameComponents];
-        timeZoneWrapper.timeZone=[NSTimeZone timeZoneWithName:timeZoneName];
-		[timeZones addObject:timeZoneWrapper];
-	}
-    
-	self.timeZonesArray = timeZones;
+    self.databaseHelper = [[SHADatabaseStorageHelper alloc]init];
+    self.cities = [self.databaseHelper getCities];
+    [self configureSectionsForTimeZoneArray:self.cities];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -104,7 +95,7 @@ NSMutableArray* _searchResult;
     static NSString *CellIdentifier = @"timeZoneSelectionCell";
     SHATimeZoneSeletctionCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    SHATimeZoneWrapper *timeZone;
+    SHACity *timeZone;
     if(_searchResult ==NULL)
     {
         // Get the time zone from the array associated with the section index in the sections array.
@@ -117,9 +108,9 @@ NSMutableArray* _searchResult;
     {
         timeZone=[_searchResult objectAtIndex:indexPath.row];
     }
-    cell.titleLabel.text = timeZone.localeName;
+    cell.titleLabel.text = timeZone.name;
     cell.offsetLabel.text=timeZone.timeZone.abbreviation;
-    cell.regionLabel.text=timeZone.region;
+    cell.regionLabel.text=timeZone.timeZone.name;
     return cell;
 }
 
@@ -163,7 +154,7 @@ NSMutableArray* _searchResult;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSArray *timeZonesInSection;
-	SHATimeZoneWrapper *timeZone;
+	SHACity *timeZone;
     if(_searchResult ==NULL)
     {
         timeZonesInSection= (self.sectionsArray)[indexPath.section];
@@ -175,7 +166,7 @@ NSMutableArray* _searchResult;
         timeZone= [_searchResult objectAtIndex:indexPath.row];
     }
     _searchResult=NULL;
-    [SHALocalDatabase updateSelectedTimeZonesAtIndex:self.selectedTimeZone.Order withValue:timeZone.timeZone];
+    [SHALocalDatabase updateSelectedTimeZonesAtIndex:self.selectedTimeZone.Order withValue:timeZone.cityId];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -190,16 +181,16 @@ NSMutableArray* _searchResult;
     if (searchText.length == 0)
     {
         _searchResult=NULL;
-        [self configureSectionsForTimeZoneArray:self.timeZonesArray];
+        [self configureSectionsForTimeZoneArray:self.cities];
           [self.tableView reloadData];
         return;
     }
     else
         _searchResult=[[NSMutableArray alloc]init];
     
-    for (SHATimeZoneWrapper *tz in self.timeZonesArray) {
+    for (SHACity *tz in self.cities) {
         
-        NSRange range = [tz.timeZone.name rangeOfString:searchText
+        NSRange range = [tz.name rangeOfString:searchText
                                                 options:NSCaseInsensitiveSearch];
         
         if (range.location != NSNotFound)
@@ -208,7 +199,7 @@ NSMutableArray* _searchResult;
         }
         else
         {
-            range = [tz.timeZone.abbreviation rangeOfString:searchText
+            range = [tz.timeZone.name rangeOfString:searchText
                                             options:NSCaseInsensitiveSearch];
             if (range.location != NSNotFound)
             {
@@ -229,7 +220,7 @@ NSMutableArray* _searchResult;
 
 - (void)setTimeZonesArray:(NSMutableArray *)newDataArray {
     
-	if (newDataArray != _timeZonesArray) {
+	/*if (newDataArray != _timeZonesArray) {
 		_timeZonesArray = [newDataArray mutableCopy];
         if (_timeZonesArray == nil) {
             self.sectionsArray = nil;
@@ -237,7 +228,7 @@ NSMutableArray* _searchResult;
         else {
             [self configureSectionsForTimeZoneArray:self.timeZonesArray];
         }
-	}
+	}*/
 }
 
 
@@ -262,10 +253,10 @@ NSMutableArray* _searchResult;
 	}
     
 	// Segregate the time zones into the appropriate arrays.
-	for (SHATimeZoneWrapper *timeZone in tzArray) {
+	for (SHACity *timeZone in tzArray) {
         
 		// Ask the collation which section number the time zone belongs in, based on its locale name.
-		NSInteger sectionNumber = [self.collation sectionForObject:timeZone collationStringSelector:@selector(localeName)];
+		NSInteger sectionNumber = [self.collation sectionForObject:timeZone collationStringSelector:@selector(name)];
         
 		// Get the array for the section.
 		NSMutableArray *sectionTimeZones = newSectionsArray[sectionNumber];
@@ -280,7 +271,7 @@ NSMutableArray* _searchResult;
 		NSMutableArray *timeZonesArrayForSection = newSectionsArray[index];
         
 		// If the table view or its contents were editable, you would make a mutable copy here.
-		NSArray *sortedTimeZonesArrayForSection = [self.collation sortedArrayFromArray:timeZonesArrayForSection collationStringSelector:@selector(localeName)];
+		NSArray *sortedTimeZonesArrayForSection = [self.collation sortedArrayFromArray:timeZonesArrayForSection collationStringSelector:@selector(name)];
         
 		// Replace the existing array with the sorted array.
 		newSectionsArray[index] = sortedTimeZonesArrayForSection;

@@ -10,29 +10,29 @@
 	<string>timezonehelper</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>B4B45503-71DD-41BD-8145-7DF3B61838EB</key>
+		<key>DAFC4EDEE8E252F49BADB290139A86E5D2E8DC0F</key>
 		<string>https://github.com/vahidtaslimi/TzHelper.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MeetingPlanner/timezonehelper.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>B4B45503-71DD-41BD-8145-7DF3B61838EB</key>
+		<key>DAFC4EDEE8E252F49BADB290139A86E5D2E8DC0F</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/vahidtaslimi/TzHelper.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>B4B45503-71DD-41BD-8145-7DF3B61838EB</string>
+	<string>DAFC4EDEE8E252F49BADB290139A86E5D2E8DC0F</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>B4B45503-71DD-41BD-8145-7DF3B61838EB</string>
+			<string>DAFC4EDEE8E252F49BADB290139A86E5D2E8DC0F</string>
 			<key>IDESourceControlWCCName</key>
 			<string>TzHelper</string>
 		</dict>

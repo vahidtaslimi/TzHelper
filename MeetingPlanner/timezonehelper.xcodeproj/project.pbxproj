@@ -28,6 +28,10 @@
 		7786CEEA182524A6000BF4E8 /* timeZoneHelperIcon80.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786CEDF182524A6000BF4E8 /* timeZoneHelperIcon80.png */; };
 		7786CEEC182528F8000BF4E8 /* timeZoneHelperIcon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786CEEB182528F8000BF4E8 /* timeZoneHelperIcon120.png */; };
 		77F20267182FB4AC00E9DB1B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F20266182FB4AC00E9DB1B /* Crashlytics.framework */; };
+		77FD10B219D2C0C4003CB52C /* SHADatabaseStorageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 77FD10B119D2C0C4003CB52C /* SHADatabaseStorageHelper.m */; };
+		77FD10B419D2C460003CB52C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD10B319D2C460003CB52C /* libsqlite3.dylib */; };
+		77FD10B719D2C7DA003CB52C /* SHACity.m in Sources */ = {isa = PBXBuildFile; fileRef = 77FD10B619D2C7DA003CB52C /* SHACity.m */; };
+		77FD10B819D2CC15003CB52C /* Cities.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 77FD10AE19D2A9C2003CB52C /* Cities.sqlite */; };
 		F259056B181929EE00787567 /* SHATimeZoneHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056A181929EE00787567 /* SHATimeZoneHelper.m */; };
 		F259057018192A4A00787567 /* SHARegion.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056D18192A4A00787567 /* SHARegion.m */; };
 		F259057118192A4A00787567 /* SHATimeZoneWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F259056F18192A4A00787567 /* SHATimeZoneWrapper.m */; };
@@ -87,6 +91,12 @@
 		7786CEDF182524A6000BF4E8 /* timeZoneHelperIcon80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeZoneHelperIcon80.png; sourceTree = "<group>"; };
 		7786CEEB182528F8000BF4E8 /* timeZoneHelperIcon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeZoneHelperIcon120.png; sourceTree = "<group>"; };
 		77F20266182FB4AC00E9DB1B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		77FD10AE19D2A9C2003CB52C /* Cities.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cities.sqlite; sourceTree = "<group>"; };
+		77FD10B019D2C0C4003CB52C /* SHADatabaseStorageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHADatabaseStorageHelper.h; sourceTree = "<group>"; };
+		77FD10B119D2C0C4003CB52C /* SHADatabaseStorageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHADatabaseStorageHelper.m; sourceTree = "<group>"; };
+		77FD10B319D2C460003CB52C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		77FD10B519D2C7DA003CB52C /* SHACity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHACity.h; sourceTree = "<group>"; };
+		77FD10B619D2C7DA003CB52C /* SHACity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHACity.m; sourceTree = "<group>"; };
 		F2590569181929EE00787567 /* SHATimeZoneHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHATimeZoneHelper.h; sourceTree = "<group>"; };
 		F259056A181929EE00787567 /* SHATimeZoneHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHATimeZoneHelper.m; sourceTree = "<group>"; };
 		F259056C18192A4A00787567 /* SHARegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHARegion.h; sourceTree = "<group>"; };
@@ -135,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77FD10B419D2C460003CB52C /* libsqlite3.dylib in Frameworks */,
 				F2A65D7A18166829004EB2EE /* CoreGraphics.framework in Frameworks */,
 				F2A65D7C18166829004EB2EE /* UIKit.framework in Frameworks */,
 				77F20267182FB4AC00E9DB1B /* Crashlytics.framework in Frameworks */,
@@ -182,6 +193,15 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
+		77FD10AF19D2C0A5003CB52C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				77FD10B019D2C0C4003CB52C /* SHADatabaseStorageHelper.h */,
+				77FD10B119D2C0C4003CB52C /* SHADatabaseStorageHelper.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		F2A1225A1819141600823331 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +235,7 @@
 		F2A65D7618166829004EB2EE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77FD10B319D2C460003CB52C /* libsqlite3.dylib */,
 				77F20266182FB4AC00E9DB1B /* Crashlytics.framework */,
 				F2A65D7718166829004EB2EE /* Foundation.framework */,
 				F2A65D7918166829004EB2EE /* CoreGraphics.framework */,
@@ -240,6 +261,7 @@
 		F2A65D7E18166829004EB2EE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				77FD10AE19D2A9C2003CB52C /* Cities.sqlite */,
 				7786CED4182524A6000BF4E8 /* Icons */,
 				F2A65D7F18166829004EB2EE /* timezonehelper-Info.plist */,
 				F2A65D8018166829004EB2EE /* InfoPlist.strings */,
@@ -270,6 +292,7 @@
 		F2A65DB918166FFA004EB2EE /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				77FD10AF19D2C0A5003CB52C /* Helpers */,
 				F2A1225A1819141600823331 /* Controllers */,
 				F2A65DC1181675E2004EB2EE /* Classes */,
 				F2A65DBA18166FFA004EB2EE /* Cells */,
@@ -292,6 +315,8 @@
 			isa = PBXGroup;
 			children = (
 				F2590572181AB51A00787567 /* SHAButton.h */,
+				77FD10B519D2C7DA003CB52C /* SHACity.h */,
+				77FD10B619D2C7DA003CB52C /* SHACity.m */,
 				F2590573181AB51A00787567 /* SHAButton.m */,
 				F2A65DC2181675E2004EB2EE /* SHADateTimeCellItem.h */,
 				F2A65DC3181675E2004EB2EE /* SHADateTimeCellItem.m */,
@@ -392,6 +417,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77FD10B819D2CC15003CB52C /* Cities.sqlite in Resources */,
 				7786CEE9182524A6000BF4E8 /* timeZoneHelperIcon76.png in Resources */,
 				777803641825521500457026 /* Launch 768x1024.png in Resources */,
 				7786CEE3182524A6000BF4E8 /* timeZoneHelperIcon152.png in Resources */,
@@ -458,11 +484,13 @@
 				F259057018192A4A00787567 /* SHARegion.m in Sources */,
 				F259056B181929EE00787567 /* SHATimeZoneHelper.m in Sources */,
 				F2590580181BE5F400787567 /* SHALocalDatabase.m in Sources */,
+				77FD10B719D2C7DA003CB52C /* SHACity.m in Sources */,
 				F259057D181BD5B600787567 /* SHATimeZoneSeletctionCell.m in Sources */,
 				F2A65D8418166829004EB2EE /* main.m in Sources */,
 				F259057118192A4A00787567 /* SHATimeZoneWrapper.m in Sources */,
 				F2A65D8818166829004EB2EE /* SHAAppDelegate.m in Sources */,
 				F259057A181BD19200787567 /* SHATimeZoneSelectionViewController.m in Sources */,
+				77FD10B219D2C0C4003CB52C /* SHADatabaseStorageHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,7 +625,7 @@
 		F2A65DAD18166829004EB2EE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shaghayegh Moshtarikhah (D9AX649GWZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -608,7 +636,7 @@
 				INFOPLIST_FILE = "MeetingPlanner/timezonehelper-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Time Zone Helper";
-				PROVISIONING_PROFILE = "E50A1145-476D-43F0-B62B-596660DC1E38";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -627,7 +655,7 @@
 				INFOPLIST_FILE = "MeetingPlanner/timezonehelper-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Time Zone Helper";
-				PROVISIONING_PROFILE = "E50A1145-476D-43F0-B62B-596660DC1E38";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -15,11 +15,11 @@
 #import "SHATimeZone.h"
 #import "SHATimeZoneSelectionViewController.h"
 #import "SHALocalDatabase.h"
-
+#import "SHACity.h"
 
 @interface SHAMainPageViewController (){
     NSMutableArray *_objects;
-    NSMutableArray *_selectedTimezones;
+    NSMutableArray *_selectedCities;
     NSMutableArray *_groupHeadersByDay;
     NSDate *_selectedDate;
     NSDateFormatter *_groupHeaderDateFormatter;
@@ -155,8 +155,11 @@
     NSDateComponents *dateComponents;
     NSInteger currentDateDayOfWeek, convertedDateDayOfWeek;
     
-    for (int i=0; i<[_selectedTimezones count]; i++) {
-        NSTimeZone* tz=[_selectedTimezones objectAtIndex:i ];
+    SHACity* baseCity = [_selectedCities objectAtIndex:0];
+    
+    for (int i=0; i<[_selectedCities count]; i++) {
+        SHACity* city = [_selectedCities objectAtIndex:i ];
+        NSTimeZone* tz=city.timeZone;
         [_dateFormatter setTimeZone:tz];
         item=[[SHADateTimeCellItem alloc]init];
         item.value=[_dateFormatter stringFromDate:currentSectionDate];
@@ -164,7 +167,7 @@
       
         
 		// Set the calendar's time zone to the default time zone.
-		[calendar setTimeZone:[_selectedTimezones objectAtIndex:0]];
+		[calendar setTimeZone:baseCity.timeZone];
 		dateComponents = [calendar components:NSWeekdayCalendarUnit fromDate:currentSectionDate];
 		currentDateDayOfWeek = [dateComponents weekday];
 		
@@ -240,14 +243,15 @@
 -(void) loadAndDisplayTimes
 {
     [self loadTimezones];
-    _groupHeaderDateFormatter.timeZone=[_selectedTimezones objectAtIndex:0];
+    SHACity* city=  [_selectedCities objectAtIndex:0];
+    _groupHeaderDateFormatter.timeZone=city.timeZone;
     
     [self loadGroupHeaders];
     
     [self addHeaderLabels];
     [self.tableView reloadData];
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    calendar.timeZone=[_selectedTimezones objectAtIndex:0];
+    calendar.timeZone=city.timeZone;
     NSDateComponents *components = [calendar components:NSHourCalendarUnit fromDate:_selectedDate];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:components.hour inSection:365];
@@ -255,12 +259,18 @@
                           atScrollPosition:UITableViewScrollPositionTop
                                   animated:YES];
 }
+
 -(void)addHeaderLabels
 {
     NSMutableArray* items=[[NSMutableArray alloc]init];
     SHATimeZone* item;
-    for (int i=0; i<_selectedTimezones.count; i++) {
-        item=[SHATimeZoneHelper Parse:[_selectedTimezones objectAtIndex:i]];
+    for (int i=0; i<_selectedCities.count; i++) {
+        SHACity* city = [_selectedCities objectAtIndex:i];
+        //item=[SHATimeZoneHelper Parse:[_selectedTimezones objectAtIndex:i]];
+        item = [[SHATimeZone alloc]init];
+        item.cityName = city.name;
+        item.name = city.name;
+        item.timeZone = city.timeZone;
         [items addObject:item];
     }
     
@@ -281,7 +291,8 @@
     _groupHeadersByDay=[[NSMutableArray alloc]init];
     
     NSCalendar *gregorianCalendar = [NSCalendar currentCalendar];
-    gregorianCalendar.timeZone=_selectedTimezones[0];
+    SHACity* city = [_selectedCities objectAtIndex:0];
+    gregorianCalendar.timeZone=city.timeZone;
     NSDateComponents * dateComponents = [gregorianCalendar
                                          components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
                                          fromDate:_selectedDate];
@@ -329,7 +340,7 @@
 
 -(void)loadTimezones
 {
-    _selectedTimezones=[SHALocalDatabase loadSelectedTimeZones];
+    _selectedCities = [SHALocalDatabase loadSelectedTimeZones];
 }
 
 - (void) headerTapped: (UIButton*) sender
